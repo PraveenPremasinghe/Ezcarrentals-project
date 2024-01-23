@@ -6,6 +6,11 @@ import { Route, Routes } from "react-router-dom";
 import Models from "./Pages/Models";
 import TestimonialsPage from "./Pages/TestimonialsPage";
 import { initializeApp } from "firebase/app";
+import AdminLogin from './module/admin/pages/login';
+import UploadDetails from './module/admin/pages/vehicleDetailsUpload';
+
+
+ 
 
 function App() {
 
@@ -30,6 +35,12 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="models" element={<Models />} />
         <Route path="testimonials" element={<TestimonialsPage />} />
+
+        {/* add admin Routes */}
+
+        <Route path="admin-login" element={<AdminLogin />} />
+        <Route path="upload-details" element={<UploadDetails />} />
+
       
       </Routes>
     </>
