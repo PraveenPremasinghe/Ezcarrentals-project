@@ -1,2 +1,5 @@
 node_modules
 git remote add origin https://github.com/PraveenPremasinghe/Ezcarrentals-project.git
+package-lock.json
+src/environment/.env
+package-lock.json
