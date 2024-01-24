@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import {
   TextField,
   Select,
@@ -13,16 +13,30 @@ import {
   Stack
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
-import * as muiSystem from '@mui/system';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import {useNavigate } from 'react-router-dom'
 
 
 const VehicleForm = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const storage = getStorage();
+  const firestore = getFirestore();
+
   const [vehicleName, setVehicleName] = useState('');
   const [perDayPrice, setPerDayPrice] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [doors, setDoors] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [progress, setProgress] = useState(0);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -34,17 +48,65 @@ const VehicleForm = () => {
     onDrop,
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data:', {
-      vehicleName,
-      perDayPrice,
-      category,
-      title,
-      doors,
-      uploadedImage,
-    });
-    
+  
+      useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+              // User is signed in, see docs for a list of available properties
+              // https://firebase.google.com/docs/reference/js/firebase.User
+              const uid = user.uid;
+              navigate("/admin-login")
+ 
+            }
+          });
+         
+    }, [])
+
+
+    const handleSubmit = (e) => {
+      console.log('upload')
+       e.preventDefault();
+    if (uploadedImage) {
+       const StorageRef = storageRef(storage,`images/${uploadedImage.name}`);
+ const uploadTask = uploadBytesResumable(StorageRef, uploadedImage);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.error(error.message);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(StorageRef);
+               try {
+            await addDoc(collection(firestore, 'vehicles'), {
+              timestamp: new Date(),
+              vehicleName: vehicleName,
+              imageUrl: downloadURL,
+              perDayPrice: perDayPrice,
+              category:category,
+              title:title,
+              doors:doors
+            });
+
+            setProgress(0);
+            setVehicleName('');
+            setPerDayPrice('');
+            setCategory('');
+            setTitle('');
+            setDoors('');
+            setUploadedImage(null);
+          } catch (error) {
+            console.error('Error adding document: ', error);
+          }
+        }
+      );
+    }
   };
 
   return (

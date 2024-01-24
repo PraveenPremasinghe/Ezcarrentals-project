@@ -43,7 +43,7 @@ const LoginForm = () => {
               // User is signed in, see docs for a list of available properties
               // https://firebase.google.com/docs/reference/js/firebase.User
               const uid = user.uid;
-              navigate("/home")
+              navigate("/upload-details")
               // ...
               console.log("uid", uid)
             }
