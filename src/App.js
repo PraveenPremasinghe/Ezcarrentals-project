@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 import AdminLogin from './module/admin/pages/login';
 import UploadDetails from './module/admin/pages/vehicleDetailsUpload';
 import { getAuth } from "firebase/auth";
+import AdminTable from "./module/admin/pages/adminTable";
 
 // var firebaseConfig = {
 //   apiKey: process.env.REACT_APP_API_KEY,
@@ -35,7 +36,7 @@ function App() {
           
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="about" element={<About />} />
@@ -46,6 +47,7 @@ function App() {
 
         <Route path="admin-login" element={<AdminLogin />} />
         <Route path="upload-details" element={<UploadDetails />} />
+        <Route path="admin-table" element={<AdminTable />} />
 
       
       </Routes>
