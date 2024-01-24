@@ -1,5 +1,5 @@
 // src/components/LoginForm.js
-import React, { useState } from "react";
+import React, { useState,useEffect  } from "react";
 import {
   TextField,
   Button,
@@ -9,19 +9,47 @@ import {
   CardContent,
 } from "@mui/material";
 import Logo from "../../../images/logo/Ezcarrentals-logo.png";
-
+import {  getAuth,signInWithEmailAndPassword ,onAuthStateChanged  } from 'firebase/auth';
 import Box from "@mui/material/Box";
- 
+import {useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
+   const navigate = useNavigate();
+   const auth = getAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState();
 
-  const handleLogin = () => {
-    // Implement your login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
+  const handleLogin = (e) => {
+ e.preventDefault();
+        signInWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+            // Signed in
+             const user = userCredential.user;
+            if(user){
+            navigate("/home")
+            }
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
   };
+
+
+      useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              // User is signed in, see docs for a list of available properties
+              // https://firebase.google.com/docs/reference/js/firebase.User
+              const uid = user.uid;
+              navigate("/home")
+              // ...
+              console.log("uid", uid)
+            }
+          });
+         
+    }, [])
 
   return (
     <Box sx={{ bgcolor: "#333333" }}>
