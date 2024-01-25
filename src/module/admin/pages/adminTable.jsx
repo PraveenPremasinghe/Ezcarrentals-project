@@ -1,29 +1,69 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import {
+  getAuth,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+    deleteObject,
+} from 'firebase/storage';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+   deleteDoc,
+   doc
+} from 'firebase/firestore';
+import {useNavigate } from 'react-router-dom'
 
-const AdminTable = ({ data, onEdit, onDelete }) => {
+const AdminTable = ({ data, onEdit }) => {
+     const navigate = useNavigate();
+    const auth = getAuth();
+  const storage = getStorage();
+  const firestore = getFirestore();
   
-  const VehicleDetailsData = [
-    {
-      id: 1,
-      vehicleName: 'Demo Car 1',
-      perDayPrice: '$60',
-      category: 'SUV',
-      title: 'Adventure Car',
-      doors: 5,
-      uploadedImage: 'https://example.com/demo_car1.jpg',
-    },
-    {
-      id: 2,
-      vehicleName: 'Demo Car 2',
-      perDayPrice: '$45',
-      category: 'Convertible',
-      title: 'Luxury Convertible',
-      doors: 2,
-      uploadedImage: 'https://example.com/demo_car2.jpg',
-    },
-    
-  ];
+  const [vehicleDetailsData,setVehicleDetailsData]  = useState([])
+
+   useEffect(() => {
+            onAuthStateChanged(auth, (user) => {
+            if (user) {
+              const uid = user.uid;
+              navigate("/admin-table")
+              // ...
+              console.log("uid", uid)
+            }
+          });
+    fetchVehicleDetails();
+  }, [firestore]);
+
+      const fetchVehicleDetails = async () => {
+      const vehiclesCollection = collection(firestore, 'vehicles');
+      const vehiclesSnapshot = await getDocs(vehiclesCollection);
+      const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setVehicleDetailsData(vehiclesData);
+    };
+
+    const onDelete = async (id, imageUrl) => {
+    try {
+
+      await deleteDoc(doc(firestore, 'vehicles', id));
+
+      const imageRef = storageRef(storage, imageUrl);
+      await deleteObject(imageRef);
+
+      fetchVehicleDetails();
+    } catch (error) {
+      console.error('Error deleting image: ', error);
+    }
+  };
 
  
  
@@ -45,7 +85,7 @@ const AdminTable = ({ data, onEdit, onDelete }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {VehicleDetailsData.map((item) => (
+          {vehicleDetailsData.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.vehicleName}</TableCell>
               <TableCell>{item.perDayPrice}</TableCell>
@@ -54,11 +94,11 @@ const AdminTable = ({ data, onEdit, onDelete }) => {
               <TableCell>{item.doors}</TableCell>
               <TableCell>
                 
-                <img src={item.uploadedImage} alt="Vehicle" style={{ width: '50px', height: 'auto' }} />
+                <img src={item.imageUrl} alt="Vehicle" style={{ width: '50px', height: 'auto' }} />
               </TableCell>
               <TableCell>
                 <IconButton onClick={() => onEdit(item)}>Edit</IconButton>
-                <IconButton onClick={() => onDelete(item.id)}>Delete</IconButton>
+                <IconButton onClick={() => onDelete(item.id,item.imageUrl)}>Delete</IconButton>
               </TableCell>
             </TableRow>
           ))}
