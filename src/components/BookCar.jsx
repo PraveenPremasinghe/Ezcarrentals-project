@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
-import CarAudi from "../images/cars-big/audia1.jpg";
-import CarGolf from "../images/cars-big/golf6.jpg";
-import CarToyota from "../images/cars-big/toyotacamry.jpg";
-import CarBmw from "../images/cars-big/bmw320.jpg";
-import CarMercedes from "../images/cars-big/benz.jpg";
-import CarPassat from "../images/cars-big/passatcc.jpg";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+} from 'firebase/firestore';
+import {
+  getStorage,
+  ref as storageRef,
+} from 'firebase/storage';
+import emailjs from '@emailjs/browser';
 
 function BookCar() {
+  const storage = getStorage();
+  const firestore = getFirestore();
+
   const [modal, setModal] = useState(false); //  class - active-modal
 
   // booking car
   const [carType, setCarType] = useState("");
+  const [carName, setCarName] = useState("");
   const [pickUp, setPickUp] = useState("");
   const [dropOff, setDropOff] = useState("");
   const [pickTime, setPickTime] = useState("");
@@ -26,6 +34,9 @@ function BookCar() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [zipcode, setZipCode] = useState("");
+
+  //vehicleDetails
+  const [vehicleDetailsData,setVehicleDetailsData]  = useState([])
 
   // taking value of modal inputs
   const handleName = (e) => {
@@ -82,6 +93,7 @@ function BookCar() {
 
   // disable page scroll when modal is displayed
   useEffect(() => {
+    fetchVehicleDetails();
     if (modal === true) {
       document.body.style.overflow = "hidden";
     } else {
@@ -89,18 +101,53 @@ function BookCar() {
     }
   }, [modal]);
 
+    useEffect(() => {
+    fetchVehicleDetails();
+
+  }, []);
+
   // confirm modal booking
   const confirmBooking = (e) => {
     e.preventDefault();
-    setModal(!modal);
+
+    const payload={
+        carType:carType,
+  carName:carName,
+  pickUp:pickUp,
+  dropOff:dropOff,
+  pickTime:pickTime,
+  dropTime:dropTime,
+  carImg:carImg,
+
+  // modal infos
+  firstName:name,
+  lastName:lastName,
+  phone:phone,
+  age:age,
+  email:email,
+  address:address,
+  city:city,
+zipcode:zipcode,
+    }
+
+    emailjs.send('service_rvlyjik', 'template_8goef6h', payload, 'ktQrDTyVKzeQHyG3a')
+      .then((result) => {
+          console.log(result.text);
+          setModal(!modal);
     const doneMsg = document.querySelector(".booking-done");
     doneMsg.style.display = "flex";
+      }, (error) => {
+          console.log(error.text);
+      });
   };
 
   // taking value of booking inputs
   const handleCar = (e) => {
+    console.log(e)
     setCarType(e.target.value);
-    setCarImg(e.target.value);
+    const selectedDate = vehicleDetailsData.find((data)=>data.id===e.target.value)
+    setCarImg(selectedDate.imageUrl);
+    setCarName(selectedDate.vehicleName)
   };
 
   const handlePick = (e) => {
@@ -119,30 +166,17 @@ function BookCar() {
     setDropTime(e.target.value);
   };
 
-  // based on value name show car img
-  let imgUrl;
-  switch (carImg) {
-    case "Audi A1 S-Line":
-      imgUrl = CarAudi;
-      break;
-    case "VW Golf 6":
-      imgUrl = CarGolf;
-      break;
-    case "Toyota Camry":
-      imgUrl = CarToyota;
-      break;
-    case "BMW 320 ModernLine":
-      imgUrl = CarBmw;
-      break;
-    case "Mercedes-Benz GLK":
-      imgUrl = CarMercedes;
-      break;
-    case "VW Passat CC":
-      imgUrl = CarPassat;
-      break;
-    default:
-      imgUrl = "";
-  }
+
+        const fetchVehicleDetails = async () => {
+      const vehiclesCollection = collection(firestore, 'vehicles');
+      const vehiclesSnapshot = await getDocs(vehiclesCollection);
+      const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setVehicleDetailsData(vehiclesData);
+      console.log(vehiclesData)
+    };
 
   // hide message
   const hideMessage = () => {
@@ -182,14 +216,9 @@ function BookCar() {
                   </label>
                   <select value={carType} onChange={handleCar}>
                     <option>Select your car type</option>
-                    <option value="Audi A1 S-Line">Audi A1 S-Line</option>
-                    <option value="VW Golf 6">VW Golf 6</option>
-                    <option value="Toyota Camry">Toyota Camry</option>
-                    <option value="BMW 320 ModernLine">
-                      BMW 320 ModernLine
-                    </option>
-                    <option value="Mercedes-Benz GLK">Mercedes-Benz GLK</option>
-                    <option value="VW Passat CC">VW Passat CC</option>
+                    {vehicleDetailsData.map((data)=>
+                      <option  key={data.id} value={data.id}>{data.vehicleName}</option>
+                    )}
                   </select>
                 </div>
 
@@ -331,9 +360,9 @@ function BookCar() {
           </div>
           <div className="booking-modal__car-info__model">
             <h5>
-              <span>Car -</span> {carType}
+              <span>Car -</span> {carName}
             </h5>
-            {imgUrl && <img src={imgUrl} alt="car_img" />}
+            {carImg && <img src={carImg} alt="car_img" />}
           </div>
         </div>
         {/* personal info */}
