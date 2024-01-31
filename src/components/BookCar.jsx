@@ -130,7 +130,7 @@ function BookCar() {
 zipcode:zipcode,
     }
 
-    emailjs.send('service_rvlyjik', 'template_8goef6h', payload, 'ktQrDTyVKzeQHyG3a')
+    emailjs.send('service_tw5uvgi', 'template_1hhrepa', payload, 'DQJFe627uX0PCpjco')
       .then((result) => {
           console.log(result.text);
           setModal(!modal);
