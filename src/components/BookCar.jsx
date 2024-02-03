@@ -9,6 +9,10 @@ import {
   ref as storageRef,
 } from 'firebase/storage';
 import emailjs from '@emailjs/browser';
+import Select from 'react-select';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import { FaArrowCircleRight  } from "react-icons/fa";
 
 function BookCar() {
   const storage = getStorage();
@@ -184,6 +188,31 @@ zipcode:zipcode,
     doneMsg.style.display = "none";
   };
 
+
+
+ 
+
+  const CarList = vehicleDetailsData.map(data => ({
+    value: data.id,
+    label: data.vehicleName,
+  }));
+
+  const pickUpLocations = [
+    { value: 'Belgrade', label: 'Belgrade' },
+    { value: 'Novi Sad', label: 'Novi Sad' },
+    { value: 'Nis', label: 'Nis' },
+    { value: 'Kragujevac', label: 'Kragujevac' },
+    { value: 'Subotica', label: 'Subotica' },
+  ];
+
+  const dropOffLocations = [
+    { value: 'Novi Sad', label: 'Novi Sad' },
+    { value: 'Belgrade', label: 'Belgrade' },
+    { value: 'Nis', label: 'Nis' },
+    { value: 'Kragujevac', label: 'Kragujevac' },
+    { value: 'Subotica', label: 'Subotica' },
+  ];
+
   return (
     <>
       <section id="booking-section" className="book-section">
@@ -194,13 +223,25 @@ zipcode:zipcode,
         ></div>
 
        
+
+
+
+
+
           <div className="book-content">
             <div className="book-content__box ">
+
+              <div className="book-content-bg">
             
-              <h2>BOOK A CAR TODAY!</h2>
+              <h2 className="book-car-title"> <span>
+                BOOK A CAR TODAY!</span> </h2>
 
               <p className="error-message">
-                All fields required! <i className="fa-solid fa-xmark"></i>
+              
+              <Alert severity="error">
+  <AlertTitle>Please fill all fields — <strong>check it out!</strong></AlertTitle>
+  
+</Alert>
               </p>
 
               <p className="booking-done">
@@ -212,50 +253,59 @@ zipcode:zipcode,
                 <div className="box-form__car-type">
                   <label>
                     <i className="fa-solid fa-car"></i> &nbsp; Select Your Car
-                    Type <b>*</b>
+                      
                   </label>
-                  <select value={carType} onChange={handleCar}>
+
+ 
+                  {/* <select value={carType} onChange={handleCar}>
                     <option>Select your car type</option>
                     {vehicleDetailsData.map((data)=>
                       <option  key={data.id} value={data.id}>{data.vehicleName}</option>
                     )}
-                  </select>
-                </div>
+                  </select> */}
 
-                <div className="box-form__car-type">
-                  <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up{" "}
-                    <b>*</b>
-                  </label>
-                  <select value={pickUp} onChange={handlePick}>
-                    <option>Select pick up location</option>
-                    <option>Belgrade</option>
-                    <option>Novi Sad</option>
-                    <option>Nis</option>
-                    <option>Kragujevac</option>
-                    <option>Subotica</option>
-                  </select>
-                </div>
+     
 
-                <div className="box-form__car-type">
-                  <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-of{" "}
-                    <b>*</b>
-                  </label>
-                  <select value={dropOff} onChange={handleDrop}>
-                    <option>Select drop off location</option>
-                    <option>Novi Sad</option>
-                    <option>Belgrade</option>
-                    <option>Nis</option>
-                    <option>Kragujevac</option>
-                    <option>Subotica</option>
-                  </select>
+      <Select
+        value={CarList.find(option => option.value === carType)}
+        onChange={selectedOption => handleCar(selectedOption.value)}
+        options={CarList}
+        placeholder="Select your car type"
+      />
+    
+                 
+
                 </div>
+                <div className="box-form__car-type">
+      <label>
+        <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up Location 
+      </label>
+
+      <Select
+        value={pickUp ? { value: pickUp, label: pickUp } : null}
+        onChange={selectedOption => handlePick(selectedOption ? selectedOption.value : null)}
+        options={pickUpLocations}
+        placeholder="Select pick up location"
+      />
+    </div>
+
+    <div className="box-form__car-type">
+      <label>
+        <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-off Location
+      </label>
+
+      <Select
+        value={dropOff ? { value: dropOff, label: dropOff } : null}
+        onChange={selectedOption => handleDrop(selectedOption ? selectedOption.value : null)}
+        options={dropOffLocations}
+        placeholder="Select drop off location"
+      />
+    </div>
+
 
                 <div className="box-form__car-time">
                   <label htmlFor="picktime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
-                    Pick-up <b>*</b>
+                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Pick-up Date
                   </label>
                   <input
                     id="picktime"
@@ -267,8 +317,7 @@ zipcode:zipcode,
 
                 <div className="box-form__car-time">
                   <label htmlFor="droptime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
-                    Drop-of <b>*</b>
+                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Drop-Off Date
                   </label>
                   <input
                     id="droptime"
@@ -276,13 +325,31 @@ zipcode:zipcode,
                     onChange={handleDropTime}
                     type="date"
                   ></input>
+
+
                 </div>
 
+
+
+                <div className="box-form__car-time">
+                  <label htmlFor="droptime">
+                    <i className="fa-regular fa-calendar-days "></i> &nbsp; 
+                  </label>
+                  <div className="search-btn">
                 <button onClick={openModal} type="submit">
-                  Search
+                  Search &nbsp; <FaArrowCircleRight /> 
                 </button>
+                </div>
+
+
+                </div>
+
+
+
+                
               </form>
 
+</div>
 </div>
              
           </div>

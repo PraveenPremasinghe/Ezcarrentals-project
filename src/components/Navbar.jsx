@@ -9,6 +9,33 @@ function Navbar() {
     setNav(!nav);
   };
 
+
+  const handleFaqClick = () => {
+    document
+      .querySelector(".contact-div")
+      .scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleServiceClick = () => {
+    document
+      .querySelector(".pick-container")
+      .scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handelTestimonialsclick = () => {
+    document
+      .querySelector(".testimonials-section")
+      .scrollIntoView({ behavior: "smooth" });
+  };
+
+
+  const handelContactusclick = () => {
+    document
+      .querySelector(".contact-div")
+      .scrollIntoView({ behavior: "smooth" });
+  };
+
+
   return (
     <>
       <nav>
@@ -54,21 +81,28 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              {" "}
-              <Link className="about-link" to="/about">
-                About
-              </Link>
+        
+              <Link className="about-link" to="#" onClick={handleFaqClick}>
+        About
+      </Link>
+            </li>
+            <li>
+        
+              <Link className="about-link" to="#" onClick={handleServiceClick}>
+        Our Service
+      </Link>
             </li>
             <li>
               {" "}
-              <Link className="models-link" to="/models">
-                Vehicle Models
-              </Link>
-            </li>
-            <li>
-              {" "}
-              <Link className="testi-link" to="">
+              <Link className="testi-link" to="#" onClick={handelTestimonialsclick}>
                 Testimonials
+              </Link>
+            </li>
+
+            <li>
+              {" "}
+              <Link className="testi-link" to="#" onClick={handelContactusclick}>
+                Contact us
               </Link>
             </li>
              

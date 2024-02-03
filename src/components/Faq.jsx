@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaPhoneAlt,FaEnvelopeOpenText,FaLocationArrow,FaHeadphonesAlt     } from 'react-icons/fa';
 
 function Faq() {
   const [activeQ, setActiveQ] = useState("q1");
@@ -14,6 +15,9 @@ function Faq() {
   const getClassQuestion = (id) => {
     return activeQ === id ? "active-question" : "";
   };
+
+  const emailAddress = 'ezcarrentalsmelbourne@gmail.com';
+  const phoneNumber = '+610400920512';
 
   return (
     <>
@@ -117,16 +121,16 @@ function Faq() {
                 research, development as well as a learning specialist. Over 15
                 years of experience.
               </p>
+              <a href={`tel:${phoneNumber}`}>
+  <FaPhoneAlt />&nbsp; {phoneNumber}
+</a>
+
+<a href={`mailto:${emailAddress}`}>
+<FaEnvelopeOpenText /> &nbsp;
+      {emailAddress}
+    </a>
               <a href="/">
-                <i className="fa-solid fa-phone"></i>&nbsp; (123) 456-7869
-              </a>
-              <a href="/">
-                <i className="fa-solid fa-envelope"></i>&nbsp;
-                carrental@carmail.com
-              </a>
-              <a href="/">
-                <i className="fa-solid fa-location-dot"></i>&nbsp; Belgrade,
-                Serbia
+              <FaLocationArrow /> &nbsp;30 Jindabyne Avenue, Chadstone VIC 3148
               </a>
             </div>
             <div className="contact-div__form">
@@ -158,11 +162,21 @@ function Faq() {
           <div className="book-banner__overlay"></div>
           <div className="container">
             <div className="text-content">
-              <h2>Book a car by getting in touch with us</h2>
+              <h2>Book a car by getting in touch with us  </h2>
               <span>
-                <i className="fa-solid fa-phone"></i>
-                <h3>(123) 456-7869</h3>
+              {/* <a href={`tel:${phoneNumber}`}>
+  <FaHeadphonesAlt    />&nbsp; {phoneNumber}
+</a> */}
+
+<button className="call-new-btn">
+  <FaPhoneAlt className="phone-icon" />
+  {phoneNumber}
+</button>
               </span>
+
+
+
+
             </div>
           </div>
         </div>
