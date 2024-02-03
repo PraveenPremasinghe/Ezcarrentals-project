@@ -1,8 +1,13 @@
-import { FaPhoneVolume ,FaEnvelopeOpenText,FaLocationArrow,FaHeadphonesAlt     } from 'react-icons/fa';
+import {
+  FaPhoneVolume,
+  FaEnvelopeOpenText,
+  FaLocationArrow,
+  FaHeadphonesAlt,
+} from "react-icons/fa";
 
 function Footer() {
-  const emailAddress = 'ezcarrentalsmelbourne@gmail.com';
-  const phoneNumber = '+610400920512';
+  const emailAddress = "ezcarrentalsmelbourne@gmail.com";
+  const phoneNumber = "+610400920512";
 
   return (
     <>
@@ -11,29 +16,26 @@ function Footer() {
           <div className="footer-content">
             <ul className="footer-content__1">
               <li>
-                <span>Ezcarrentals </span> 
+                <span>Ezcarrentals </span>
               </li>
               <li>
                 We offers a big range of vehicles for all your driving needs. We
                 have the perfect car to meet your needs.
               </li>
               <li>
-              <a href={`tel:${phoneNumber}`}>
-  <FaPhoneVolume  />&nbsp;{phoneNumber}
-</a>
+                <a href={`tel:${phoneNumber}`}>
+                  <FaPhoneVolume />
+                  &nbsp;{phoneNumber}
+                </a>
               </li>
 
               <li>
-              <a href={`mailto:${emailAddress}`}>
-<FaEnvelopeOpenText /> &nbsp;
-      {emailAddress}
-    </a>
+                <a href={`mailto:${emailAddress}`}>
+                  <FaEnvelopeOpenText /> &nbsp;
+                  {emailAddress}
+                </a>
               </li>
-
-             
             </ul>
-
-           
 
             <ul className="footer-content__2">
               <li>Working Hours</li>
@@ -56,12 +58,10 @@ function Footer() {
             </ul>
           </div>
         </div>
-
-     
       </footer>
       <div className="footer-bottom">
         Designed and Developed by Zero I N D E X &copy; 2024 All Rights Reserved
-          </div>
+      </div>
     </>
   );
 }

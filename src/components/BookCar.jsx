@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-} from 'firebase/firestore';
-import {
-  getStorage,
-  ref as storageRef,
-} from 'firebase/storage';
-import emailjs from '@emailjs/browser';
-import Select from 'react-select';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import { FaArrowCircleRight  } from "react-icons/fa";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getStorage, ref as storageRef } from "firebase/storage";
+import emailjs from "@emailjs/browser";
+import Select from "react-select";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 function BookCar() {
   const storage = getStorage();
@@ -40,7 +33,7 @@ function BookCar() {
   const [zipcode, setZipCode] = useState("");
 
   //vehicleDetails
-  const [vehicleDetailsData,setVehicleDetailsData]  = useState([])
+  const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
 
   // taking value of modal inputs
   const handleName = (e) => {
@@ -105,53 +98,58 @@ function BookCar() {
     }
   }, [modal]);
 
-    useEffect(() => {
+  useEffect(() => {
     fetchVehicleDetails();
-
   }, []);
 
   // confirm modal booking
   const confirmBooking = (e) => {
     e.preventDefault();
 
-    const payload={
-        carType:carType,
-  carName:carName,
-  pickUp:pickUp,
-  dropOff:dropOff,
-  pickTime:pickTime,
-  dropTime:dropTime,
-  carImg:carImg,
+    const payload = {
+      carType: carType,
+      carName: carName,
+      pickUp: pickUp,
+      dropOff: dropOff,
+      pickTime: pickTime,
+      dropTime: dropTime,
+      carImg: carImg,
 
-  // modal infos
-  firstName:name,
-  lastName:lastName,
-  phone:phone,
-  age:age,
-  email:email,
-  address:address,
-  city:city,
-zipcode:zipcode,
-    }
+      // modal infos
+      firstName: name,
+      lastName: lastName,
+      phone: phone,
+      age: age,
+      email: email,
+      address: address,
+      city: city,
+      zipcode: zipcode,
+    };
 
-    emailjs.send('service_rvlyjik', 'template_8goef6h', payload, 'ktQrDTyVKzeQHyG3a')
-      .then((result) => {
+    emailjs
+      .send("service_rvlyjik", "template_8goef6h", payload, "ktQrDTyVKzeQHyG3a")
+      .then(
+        (result) => {
           console.log(result.text);
           setModal(!modal);
-    const doneMsg = document.querySelector(".booking-done");
-    doneMsg.style.display = "flex";
-      }, (error) => {
+          const doneMsg = document.querySelector(".booking-done");
+          doneMsg.style.display = "flex";
+        },
+        (error) => {
           console.log(error.text);
-      });
+        }
+      );
   };
 
   // taking value of booking inputs
   const handleCar = (e) => {
-    console.log(e)
+    console.log(e);
     setCarType(e.target.value);
-    const selectedDate = vehicleDetailsData.find((data)=>data.id===e.target.value)
+    const selectedDate = vehicleDetailsData.find(
+      (data) => data.id === e.target.value
+    );
     setCarImg(selectedDate.imageUrl);
-    setCarName(selectedDate.vehicleName)
+    setCarName(selectedDate.vehicleName);
   };
 
   const handlePick = (e) => {
@@ -170,17 +168,16 @@ zipcode:zipcode,
     setDropTime(e.target.value);
   };
 
-
-        const fetchVehicleDetails = async () => {
-      const vehiclesCollection = collection(firestore, 'vehicles');
-      const vehiclesSnapshot = await getDocs(vehiclesCollection);
-      const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setVehicleDetailsData(vehiclesData);
-      console.log(vehiclesData)
-    };
+  const fetchVehicleDetails = async () => {
+    const vehiclesCollection = collection(firestore, "vehicles");
+    const vehiclesSnapshot = await getDocs(vehiclesCollection);
+    const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setVehicleDetailsData(vehiclesData);
+    console.log(vehiclesData);
+  };
 
   // hide message
   const hideMessage = () => {
@@ -188,29 +185,25 @@ zipcode:zipcode,
     doneMsg.style.display = "none";
   };
 
-
-
- 
-
-  const CarList = vehicleDetailsData.map(data => ({
+  const CarList = vehicleDetailsData.map((data) => ({
     value: data.id,
     label: data.vehicleName,
   }));
 
   const pickUpLocations = [
-    { value: 'Belgrade', label: 'Belgrade' },
-    { value: 'Novi Sad', label: 'Novi Sad' },
-    { value: 'Nis', label: 'Nis' },
-    { value: 'Kragujevac', label: 'Kragujevac' },
-    { value: 'Subotica', label: 'Subotica' },
+    { value: "Belgrade", label: "Belgrade" },
+    { value: "Novi Sad", label: "Novi Sad" },
+    { value: "Nis", label: "Nis" },
+    { value: "Kragujevac", label: "Kragujevac" },
+    { value: "Subotica", label: "Subotica" },
   ];
 
   const dropOffLocations = [
-    { value: 'Novi Sad', label: 'Novi Sad' },
-    { value: 'Belgrade', label: 'Belgrade' },
-    { value: 'Nis', label: 'Nis' },
-    { value: 'Kragujevac', label: 'Kragujevac' },
-    { value: 'Subotica', label: 'Subotica' },
+    { value: "Novi Sad", label: "Novi Sad" },
+    { value: "Belgrade", label: "Belgrade" },
+    { value: "Nis", label: "Nis" },
+    { value: "Kragujevac", label: "Kragujevac" },
+    { value: "Subotica", label: "Subotica" },
   ];
 
   return (
@@ -222,26 +215,20 @@ zipcode:zipcode,
           className={`modal-overlay ${modal ? "active-modal" : ""}`}
         ></div>
 
-       
-
-
-
-
-
-          <div className="book-content">
-            <div className="book-content__box ">
-
-              <div className="book-content-bg">
-            
-              <h2 className="book-car-title"> <span>
-                BOOK A CAR TODAY!</span> </h2>
+        <div className="book-content">
+          <div className="book-content__box ">
+            <div className="book-content-bg">
+              <h2 className="book-car-title">
+                {" "}
+                <span>BOOK A CAR TODAY!</span>{" "}
+              </h2>
 
               <p className="error-message">
-              
-              <Alert severity="error">
-  <AlertTitle>Please fill all fields — <strong>check it out!</strong></AlertTitle>
-  
-</Alert>
+                <Alert severity="error">
+                  <AlertTitle>
+                    Please fill all fields — <strong>check it out!</strong>
+                  </AlertTitle>
+                </Alert>
               </p>
 
               <p className="booking-done">
@@ -253,10 +240,8 @@ zipcode:zipcode,
                 <div className="box-form__car-type">
                   <label>
                     <i className="fa-solid fa-car"></i> &nbsp; Select Your Car
-                      
                   </label>
 
- 
                   {/* <select value={carType} onChange={handleCar}>
                     <option>Select your car type</option>
                     {vehicleDetailsData.map((data)=>
@@ -264,48 +249,51 @@ zipcode:zipcode,
                     )}
                   </select> */}
 
-     
-
-      <Select
-        value={CarList.find(option => option.value === carType)}
-        onChange={selectedOption => handleCar(selectedOption.value)}
-        options={CarList}
-        placeholder="Select your car type"
-      />
-    
-                 
-
+                  <Select
+                    value={CarList.find((option) => option.value === carType)}
+                    onChange={(selectedOption) =>
+                      handleCar(selectedOption.value)
+                    }
+                    options={CarList}
+                    placeholder="Select your car type"
+                  />
                 </div>
                 <div className="box-form__car-type">
-      <label>
-        <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up Location 
-      </label>
+                  <label>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up
+                    Location
+                  </label>
 
-      <Select
-        value={pickUp ? { value: pickUp, label: pickUp } : null}
-        onChange={selectedOption => handlePick(selectedOption ? selectedOption.value : null)}
-        options={pickUpLocations}
-        placeholder="Select pick up location"
-      />
-    </div>
+                  <Select
+                    value={pickUp ? { value: pickUp, label: pickUp } : null}
+                    onChange={(selectedOption) =>
+                      handlePick(selectedOption ? selectedOption.value : null)
+                    }
+                    options={pickUpLocations}
+                    placeholder="Select pick up location"
+                  />
+                </div>
 
-    <div className="box-form__car-type">
-      <label>
-        <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-off Location
-      </label>
+                <div className="box-form__car-type">
+                  <label>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-off
+                    Location
+                  </label>
 
-      <Select
-        value={dropOff ? { value: dropOff, label: dropOff } : null}
-        onChange={selectedOption => handleDrop(selectedOption ? selectedOption.value : null)}
-        options={dropOffLocations}
-        placeholder="Select drop off location"
-      />
-    </div>
-
+                  <Select
+                    value={dropOff ? { value: dropOff, label: dropOff } : null}
+                    onChange={(selectedOption) =>
+                      handleDrop(selectedOption ? selectedOption.value : null)
+                    }
+                    options={dropOffLocations}
+                    placeholder="Select drop off location"
+                  />
+                </div>
 
                 <div className="box-form__car-time">
                   <label htmlFor="picktime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Pick-up Date
+                    <i className="fa-regular fa-calendar-days "></i>{" "}
+                    &nbsp;Pick-up Date
                   </label>
                   <input
                     id="picktime"
@@ -317,7 +305,8 @@ zipcode:zipcode,
 
                 <div className="box-form__car-time">
                   <label htmlFor="droptime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Drop-Off Date
+                    <i className="fa-regular fa-calendar-days "></i>{" "}
+                    &nbsp;Drop-Off Date
                   </label>
                   <input
                     id="droptime"
@@ -325,35 +314,22 @@ zipcode:zipcode,
                     onChange={handleDropTime}
                     type="date"
                   ></input>
-
-
                 </div>
-
-
 
                 <div className="box-form__car-time">
                   <label htmlFor="droptime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp; 
+                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
                   </label>
                   <div className="search-btn">
-                <button onClick={openModal} type="submit">
-                  Search &nbsp; <FaArrowCircleRight /> 
-                </button>
+                    <button onClick={openModal} type="submit">
+                      Search &nbsp; <FaArrowCircleRight />
+                    </button>
+                  </div>
                 </div>
-
-
-                </div>
-
-
-
-                
               </form>
-
-</div>
-</div>
-             
+            </div>
           </div>
-        
+        </div>
       </section>
 
       {/* modal ------------------------------------ */}

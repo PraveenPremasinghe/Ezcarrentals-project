@@ -9,7 +9,6 @@ function Navbar() {
     setNav(!nav);
   };
 
-
   const handleFaqClick = () => {
     document
       .querySelector(".contact-div")
@@ -28,13 +27,11 @@ function Navbar() {
       .scrollIntoView({ behavior: "smooth" });
   };
 
-
   const handelContactusclick = () => {
     document
       .querySelector(".contact-div")
       .scrollIntoView({ behavior: "smooth" });
   };
-
 
   return (
     <>
@@ -50,7 +47,7 @@ function Navbar() {
                 Home
               </Link>
             </li>
-            
+
             <li>
               <Link onClick={openNav} to="/models">
                 Models
@@ -61,8 +58,6 @@ function Navbar() {
                 Testimonials
               </Link>
             </li>
-           
-          
           </ul>
         </div>
 
@@ -81,34 +76,37 @@ function Navbar() {
               </Link>
             </li>
             <li>
-        
               <Link className="about-link" to="#" onClick={handleFaqClick}>
-        About
-      </Link>
+                About
+              </Link>
             </li>
             <li>
-        
               <Link className="about-link" to="#" onClick={handleServiceClick}>
-        Our Service
-      </Link>
+                Our Service
+              </Link>
             </li>
             <li>
               {" "}
-              <Link className="testi-link" to="#" onClick={handelTestimonialsclick}>
+              <Link
+                className="testi-link"
+                to="#"
+                onClick={handelTestimonialsclick}
+              >
                 Testimonials
               </Link>
             </li>
 
             <li>
               {" "}
-              <Link className="testi-link" to="#" onClick={handelContactusclick}>
+              <Link
+                className="testi-link"
+                to="#"
+                onClick={handelContactusclick}
+              >
                 Contact us
               </Link>
             </li>
-             
-            
           </ul>
-    
 
           {/* mobile */}
           <div className="mobile-hamb" onClick={openNav}>

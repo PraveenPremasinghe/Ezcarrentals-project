@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { FaPhoneAlt,FaEnvelopeOpenText,FaLocationArrow,FaHeadphonesAlt     } from 'react-icons/fa';
+import {
+  FaPhoneAlt,
+  FaEnvelopeOpenText,
+  FaLocationArrow,
+  FaHeadphonesAlt,
+} from "react-icons/fa";
 
 function Faq() {
   const [activeQ, setActiveQ] = useState("q1");
@@ -16,8 +21,8 @@ function Faq() {
     return activeQ === id ? "active-question" : "";
   };
 
-  const emailAddress = 'ezcarrentalsmelbourne@gmail.com';
-  const phoneNumber = '+610400920512';
+  const emailAddress = "ezcarrentalsmelbourne@gmail.com";
+  const phoneNumber = "+610400920512";
 
   return (
     <>
@@ -109,9 +114,7 @@ function Faq() {
         </div>
       </section>
 
-
       <section className="contact-page">
-       
         <div className="container">
           <div className="contact-div">
             <div className="contact-div__text">
@@ -122,15 +125,17 @@ function Faq() {
                 years of experience.
               </p>
               <a href={`tel:${phoneNumber}`}>
-  <FaPhoneAlt />&nbsp; {phoneNumber}
-</a>
+                <FaPhoneAlt />
+                &nbsp; {phoneNumber}
+              </a>
 
-<a href={`mailto:${emailAddress}`}>
-<FaEnvelopeOpenText /> &nbsp;
-      {emailAddress}
-    </a>
+              <a href={`mailto:${emailAddress}`}>
+                <FaEnvelopeOpenText /> &nbsp;
+                {emailAddress}
+              </a>
               <a href="/">
-              <FaLocationArrow /> &nbsp;30 Jindabyne Avenue, Chadstone VIC 3148
+                <FaLocationArrow /> &nbsp;30 Jindabyne Avenue, Chadstone VIC
+                3148
               </a>
             </div>
             <div className="contact-div__form">
@@ -162,25 +167,20 @@ function Faq() {
           <div className="book-banner__overlay"></div>
           <div className="container">
             <div className="text-content">
-              <h2>Book a car by getting in touch with us  </h2>
+              <h2>Book a car by getting in touch with us </h2>
               <span>
-              {/* <a href={`tel:${phoneNumber}`}>
+                {/* <a href={`tel:${phoneNumber}`}>
   <FaHeadphonesAlt    />&nbsp; {phoneNumber}
 </a> */}
 
-<button className="call-new-btn">
-  <FaPhoneAlt className="phone-icon" />
-  {phoneNumber}
-</button>
+                <button className="call-new-btn">
+                  <FaPhoneAlt className="phone-icon" />
+                  {phoneNumber}
+                </button>
               </span>
-
-
-
-
             </div>
           </div>
         </div>
-        
       </section>
     </>
   );

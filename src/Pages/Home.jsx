@@ -13,10 +13,11 @@ function Home() {
   return (
     <>
       <Hero />
+      <Banner />
       <BookCar />
       <PlanTrip />
       <OurService />
-      <Banner />
+     
    
       <Testimonials />
       <Faq />
