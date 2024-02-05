@@ -25,7 +25,7 @@ const LoginForm = () => {
         .then((userCredential) => {
              const user = userCredential.user;
             if(user){
-            navigate("/home")
+            navigate("/admin-table")
             }
         })
         .catch((error) => {
@@ -72,7 +72,7 @@ const LoginForm = () => {
                 <img src={Logo} alt="logo-img" />
               </Box>
 
-              <Typography variant="h4">Login</Typography>
+              <Typography variant="h6">Login</Typography>
               <form>
                 <TextField
                   label="Username"

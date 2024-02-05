@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-} from 'firebase/firestore';
-import {
-  getStorage,
-  ref as storageRef,
-} from 'firebase/storage';
-import emailjs from '@emailjs/browser';
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getStorage, ref as storageRef } from "firebase/storage";
+import emailjs from "@emailjs/browser";
+import Select from "react-select";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 function BookCar() {
   const storage = getStorage();
@@ -36,7 +33,7 @@ function BookCar() {
   const [zipcode, setZipCode] = useState("");
 
   //vehicleDetails
-  const [vehicleDetailsData,setVehicleDetailsData]  = useState([])
+  const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
 
   // taking value of modal inputs
   const handleName = (e) => {
@@ -75,6 +72,7 @@ function BookCar() {
   const openModal = (e) => {
     e.preventDefault();
     const errorMsg = document.querySelector(".error-message");
+   
     if (
       pickUp === "" ||
       dropOff === "" ||
@@ -101,61 +99,67 @@ function BookCar() {
     }
   }, [modal]);
 
-    useEffect(() => {
+  useEffect(() => {
     fetchVehicleDetails();
-
   }, []);
 
   // confirm modal booking
   const confirmBooking = (e) => {
     e.preventDefault();
 
-    const payload={
-        carType:carType,
-  carName:carName,
-  pickUp:pickUp,
-  dropOff:dropOff,
-  pickTime:pickTime,
-  dropTime:dropTime,
-  carImg:carImg,
+    const payload = {
+      carType: carType,
+      carName: carName,
+      pickUp: pickUp,
+      dropOff: dropOff,
+      pickTime: pickTime,
+      dropTime: dropTime,
+      carImg: carImg,
 
-  // modal infos
-  firstName:name,
-  lastName:lastName,
-  phone:phone,
-  age:age,
-  email:email,
-  address:address,
-  city:city,
-zipcode:zipcode,
-    }
+      // modal infos
+      firstName: name,
+      lastName: lastName,
+      phone: phone,
+      age: age,
+      email: email,
+      address: address,
+      city: city,
+      zipcode: zipcode,
+    };
+
 
     emailjs.send(process.env.EMAIL_SERVIC_ID, process.env.EMAIL_TEMPLATE_ID, payload, process.env.EMAIL_PUBLIC_KEY)
       .then((result) => {
           console.log(result.text);
           setModal(!modal);
-    const doneMsg = document.querySelector(".booking-done");
-    doneMsg.style.display = "flex";
-      }, (error) => {
+          const doneMsg = document.querySelector(".booking-done");
+          doneMsg.style.display = "flex";
+        },
+        (error) => {
           console.log(error.text);
-      });
+        }
+      );
   };
 
   // taking value of booking inputs
   const handleCar = (e) => {
-    console.log(e)
-    setCarType(e.target.value);
-    const selectedDate = vehicleDetailsData.find((data)=>data.id===e.target.value)
+    console.log(e);
+    setCarType(e);
+    const selectedDate = vehicleDetailsData.find(
+      (data) => data.id === e.value
+    );
     setCarImg(selectedDate.imageUrl);
-    setCarName(selectedDate.vehicleName)
+    setCarName(selectedDate.vehicleName);
   };
 
+
   const handlePick = (e) => {
-    setPickUp(e.target.value);
+    setPickUp(e);
+ 
   };
 
   const handleDrop = (e) => {
-    setDropOff(e.target.value);
+    setDropOff(e);
   };
 
   const handlePickTime = (e) => {
@@ -166,17 +170,16 @@ zipcode:zipcode,
     setDropTime(e.target.value);
   };
 
-
-        const fetchVehicleDetails = async () => {
-      const vehiclesCollection = collection(firestore, 'vehicles');
-      const vehiclesSnapshot = await getDocs(vehiclesCollection);
-      const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setVehicleDetailsData(vehiclesData);
-      console.log(vehiclesData)
-    };
+  const fetchVehicleDetails = async () => {
+    const vehiclesCollection = collection(firestore, "vehicles");
+    const vehiclesSnapshot = await getDocs(vehiclesCollection);
+    const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setVehicleDetailsData(vehiclesData);
+    console.log(vehiclesData);
+  };
 
   // hide message
   const hideMessage = () => {
@@ -184,6 +187,30 @@ zipcode:zipcode,
     doneMsg.style.display = "none";
   };
 
+  const CarList = vehicleDetailsData.map((data) => ({
+    value: data.id,
+    label: data.vehicleName,
+  }));
+
+  const pickUpLocations = [
+    { value: "Belgrade", label: "Belgrade" },
+    { value: "Novi Sad", label: "Novi Sad" },
+    { value: "Nis", label: "Nis" },
+    { value: "Kragujevac", label: "Kragujevac" },
+    { value: "Subotica", label: "Subotica" },
+  ];
+
+  const dropOffLocations = [
+    { value: "Novi Sad", label: "Novi Sad" },
+    { value: "Belgrade", label: "Belgrade" },
+    { value: "Nis", label: "Nis" },
+    { value: "Kragujevac", label: "Kragujevac" },
+    { value: "Subotica", label: "Subotica" },
+  ];
+
+
+    // Get the current date in the format "YYYY-MM-DD"
+    const currentDate = new Date().toISOString().split('T')[0];
   return (
     <>
       <section id="booking-section" className="book-section">
@@ -193,18 +220,24 @@ zipcode:zipcode,
           className={`modal-overlay ${modal ? "active-modal" : ""}`}
         ></div>
 
-       
-          <div className="book-content">
-            <div className="book-content__box ">
-            
-              <h2>BOOK A CAR TODAY!</h2>
+        <div className="book-content">
+          <div className="book-content__box ">
+            <div className="book-content-bg">
+              <h2 className="book-car-title">
+                {" "}
+                <span>BOOK A CAR TODAY!</span>{" "}
+              </h2>
 
               <p className="error-message">
-                All fields required! <i className="fa-solid fa-xmark"></i>
+                <Alert severity="error">
+                  <AlertTitle>
+                    Please fill all fields — <strong>check it out!</strong>
+                  </AlertTitle>
+                </Alert>
               </p>
 
               <p className="booking-done">
-                Check your email to confirm an order.{" "}
+              Thank You for Booking with us!
                 <i onClick={hideMessage} className="fa-solid fa-xmark"></i>
               </p>
 
@@ -212,82 +245,104 @@ zipcode:zipcode,
                 <div className="box-form__car-type">
                   <label>
                     <i className="fa-solid fa-car"></i> &nbsp; Select Your Car
-                    Type <b>*</b>
                   </label>
-                  <select value={carType} onChange={handleCar}>
-                    <option>Select your car type</option>
-                    {vehicleDetailsData.map((data)=>
-                      <option  key={data.id} value={data.id}>{data.vehicleName}</option>
-                    )}
-                  </select>
+
+                  {/* *****************************fdhbdfgh******************************** */}
+                 
+
+             
+
+ 
+
+
+                  <Select
+                    value={carType}
+                    onChange={handleCar}
+                    options={CarList}
+                    placeholder="Select your car type"
+                  />
+
                 </div>
 
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up{" "}
-                    <b>*</b>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up
+                    Location
                   </label>
-                  <select value={pickUp} onChange={handlePick}>
-                    <option>Select pick up location</option>
-                    <option>Belgrade</option>
-                    <option>Novi Sad</option>
-                    <option>Nis</option>
-                    <option>Kragujevac</option>
-                    <option>Subotica</option>
-                  </select>
+
+                  <Select
+                    value={pickUp ? { value: pickUp, label: pickUp } : null}
+                    onChange={(selectedOption) =>
+                      handlePick(selectedOption ? selectedOption.value : null)
+                    }
+                    options={pickUpLocations}
+                    placeholder="Select pick up location"
+                  />
+
                 </div>
 
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-of{" "}
-                    <b>*</b>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-off
+                    Location
                   </label>
-                  <select value={dropOff} onChange={handleDrop}>
-                    <option>Select drop off location</option>
-                    <option>Novi Sad</option>
-                    <option>Belgrade</option>
-                    <option>Nis</option>
-                    <option>Kragujevac</option>
-                    <option>Subotica</option>
-                  </select>
+
+                  <Select
+                    value={dropOff ? { value: dropOff, label: dropOff } : null}
+                    onChange={(selectedOption) =>
+                      handleDrop(selectedOption ? selectedOption.value : null)
+                    }
+                    options={dropOffLocations}
+                    placeholder="Select drop off location"
+                  />
                 </div>
 
                 <div className="box-form__car-time">
                   <label htmlFor="picktime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
-                    Pick-up <b>*</b>
+                    <i className="fa-regular fa-calendar-days "></i>{" "}
+                    &nbsp;Pick-up Date
                   </label>
                   <input
                     id="picktime"
                     value={pickTime}
                     onChange={handlePickTime}
                     type="date"
+                    min={currentDate}
                   ></input>
                 </div>
 
                 <div className="box-form__car-time">
                   <label htmlFor="droptime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
-                    Drop-of <b>*</b>
+                    <i className="fa-regular fa-calendar-days "></i>{" "}
+                    &nbsp;Drop-Off Date
                   </label>
                   <input
                     id="droptime"
                     value={dropTime}
                     onChange={handleDropTime}
                     type="date"
+                    min={currentDate} 
                   ></input>
                 </div>
 
-                <button onClick={openModal} type="submit">
-                  Search
-                </button>
+                <div className="box-form__car-time">
+                  <label htmlFor="droptime">
+                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
+                  </label>
+                  <div className="search-btn">
+                    <button onClick={openModal} type="submit">
+                      Search &nbsp; <FaArrowCircleRight />
+                    </button>
+                  </div>
+                </div>
               </form>
-
-</div>
-             
+            </div>
           </div>
-        
+        </div>
       </section>
+
+
+      
 
       {/* modal ------------------------------------ */}
 
@@ -318,8 +373,8 @@ zipcode:zipcode,
                 <div>
                   <h6>Pick-Up Date & Time</h6>
                   <p>
-                    {pickTime} /{" "}
-                    <input type="time" className="input-time"></input>
+                    {pickTime} {" "}
+                    {/* <input type="time" className="input-time"></input> */}
                   </p>
                 </div>
               </span>
@@ -331,8 +386,8 @@ zipcode:zipcode,
                 <div>
                   <h6>Drop-Off Date & Time</h6>
                   <p>
-                    {dropTime} /{" "}
-                    <input type="time" className="input-time"></input>
+                    {dropTime} {" "}
+                    {/* <input type="time" className="input-time"></input> */}
                   </p>
                 </div>
               </span>
@@ -360,7 +415,7 @@ zipcode:zipcode,
           </div>
           <div className="booking-modal__car-info__model">
             <h5>
-              <span>Car -</span> {carName}
+              <span>Your Selected Car</span> {carName}
             </h5>
             {carImg && <img src={carImg} alt="car_img" />}
           </div>
@@ -372,7 +427,7 @@ zipcode:zipcode,
             <div className="info-form__2col">
               <span>
                 <label>
-                  First Name <b>*</b>
+                  First Name 
                 </label>
                 <input
                   value={name}
@@ -380,12 +435,12 @@ zipcode:zipcode,
                   type="text"
                   placeholder="Enter your first name"
                 ></input>
-                <p className="error-modal">This field is required.</p>
+                
               </span>
 
               <span>
                 <label>
-                  Last Name <b>*</b>
+                  Last Name
                 </label>
                 <input
                   value={lastName}
@@ -393,12 +448,12 @@ zipcode:zipcode,
                   type="text"
                   placeholder="Enter your last name"
                 ></input>
-                <p className="error-modal ">This field is required.</p>
+          
               </span>
 
               <span>
                 <label>
-                  Phone Number <b>*</b>
+                  Phone Number 
                 </label>
                 <input
                   value={phone}
@@ -406,12 +461,12 @@ zipcode:zipcode,
                   type="tel"
                   placeholder="Enter your phone number"
                 ></input>
-                <p className="error-modal">This field is required.</p>
+                
               </span>
 
               <span>
                 <label>
-                  Age <b>*</b>
+                  Age 
                 </label>
                 <input
                   value={age}
@@ -419,14 +474,14 @@ zipcode:zipcode,
                   type="number"
                   placeholder="18"
                 ></input>
-                <p className="error-modal ">This field is required.</p>
+                
               </span>
             </div>
 
             <div className="info-form__1col">
               <span>
                 <label>
-                  Email <b>*</b>
+                  Email 
                 </label>
                 <input
                   value={email}
@@ -434,12 +489,12 @@ zipcode:zipcode,
                   type="email"
                   placeholder="Enter your email address"
                 ></input>
-                <p className="error-modal">This field is required.</p>
+                
               </span>
 
               <span>
                 <label>
-                  Address <b>*</b>
+                  Address 
                 </label>
                 <input
                   value={address}
@@ -447,14 +502,14 @@ zipcode:zipcode,
                   type="text"
                   placeholder="Enter your street address"
                 ></input>
-                <p className="error-modal ">This field is required.</p>
+              
               </span>
             </div>
 
             <div className="info-form__2col">
               <span>
                 <label>
-                  City <b>*</b>
+                  City 
                 </label>
                 <input
                   value={city}
@@ -462,12 +517,12 @@ zipcode:zipcode,
                   type="text"
                   placeholder="Enter your city"
                 ></input>
-                <p className="error-modal">This field is required.</p>
+                
               </span>
 
               <span>
                 <label>
-                  Zip Code <b>*</b>
+                  Zip Code 
                 </label>
                 <input
                   value={zipcode}
@@ -475,14 +530,11 @@ zipcode:zipcode,
                   type="text"
                   placeholder="Enter your zip code"
                 ></input>
-                <p className="error-modal ">This field is required.</p>
+             
               </span>
             </div>
 
-            <span className="info-form__checkbox">
-              <input type="checkbox"></input>
-              <p>Please send me latest news and updates</p>
-            </span>
+     
 
             <div className="reserve-button">
               <button onClick={confirmBooking}>Reserve Now</button>

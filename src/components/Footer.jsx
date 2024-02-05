@@ -1,4 +1,14 @@
+import {
+  FaPhoneVolume,
+  FaEnvelopeOpenText,
+  FaLocationArrow,
+  FaHeadphonesAlt,
+} from "react-icons/fa";
+
 function Footer() {
+  const emailAddress = "ezcarrentalsmelbourne@gmail.com";
+  const phoneNumber = "+610400920512";
+
   return (
     <>
       <footer className="footer">
@@ -6,47 +16,24 @@ function Footer() {
           <div className="footer-content">
             <ul className="footer-content__1">
               <li>
-                <span>Ezcarrentals </span> 
+                <span>Ezcarrentals </span>
               </li>
               <li>
                 We offers a big range of vehicles for all your driving needs. We
                 have the perfect car to meet your needs.
               </li>
               <li>
-                <a href="tel:123456789">
-                  <i className="fa-solid fa-phone"></i> &nbsp; (123) -456-789
+                <a href={`tel:${phoneNumber}`}>
+                  <FaPhoneVolume />
+                  &nbsp;{phoneNumber}
                 </a>
               </li>
 
               <li>
-                <a
-                  href="mailto: 
-                carrental@gmail.com"
-                >
-                  <i className="fa-solid fa-envelope"></i>
-                  &nbsp; calebjephuneh@gmail.com
+                <a href={`mailto:${emailAddress}`}>
+                  <FaEnvelopeOpenText /> &nbsp;
+                  {emailAddress}
                 </a>
-              </li>
-
-             
-            </ul>
-
-            <ul className="footer-content__2">
-              <li>Company</li>
-              <li>
-                <a href="#home">New York</a>
-              </li>
-              <li>
-                <a href="#home">Careers</a>
-              </li>
-              <li>
-                <a href="#home">Mobile</a>
-              </li>
-              <li>
-                <a href="#home">Blog</a>
-              </li>
-              <li>
-                <a href="#home">How we work</a>
               </li>
             </ul>
 
@@ -71,12 +58,10 @@ function Footer() {
             </ul>
           </div>
         </div>
-
-     
       </footer>
       <div className="footer-bottom">
         Designed and Developed by Zero I N D E X &copy; 2024 All Rights Reserved
-          </div>
+      </div>
     </>
   );
 }

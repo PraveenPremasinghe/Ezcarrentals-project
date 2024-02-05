@@ -125,7 +125,7 @@ const VehicleForm = () => {
 
         <Card 
         sx={{p:3,borderRadius:'14px' }}>
-      <Typography variant="h4" align="center" gutterBottom>
+      <Typography variant="h5" align="center" gutterBottom>
         Vehicle Information Form
       </Typography>
       
@@ -137,6 +137,7 @@ const VehicleForm = () => {
           margin="normal"
           value={vehicleName}
           onChange={(e) => setVehicleName(e.target.value)}
+          sx={{ '& label': { fontSize: '0.8rem' } }} 
         />
 
         <TextField

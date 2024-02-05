@@ -280,8 +280,10 @@ function Models() {
             <div className="text-content">
               <h2>Book a car by getting in touch with us</h2>
               <span>
-                <i className="fa-solid fa-phone"></i>
-                <h3>(123) 456-7869</h3>
+              <a href="tel:0400920512">
+  <i className="fa-solid fa-phone"></i>&nbsp; +61 0400 920 512
+</a>
+
               </span>
             </div>
           </div>

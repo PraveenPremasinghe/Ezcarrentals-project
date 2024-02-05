@@ -1,0 +1,389 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+
+
+}
+
+
+.section-tp-bt {
+  margin: 10rem 0rem;
+
+}
+
+.hero-section-bg {
+
+  background-image: url('../images/hero/hero-11.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: relative;
+
+}
+
+.home-page-car-section {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(11.6px);
+  -webkit-backdrop-filter: blur(11.6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px;
+
+
+
+
+}
+
+
+.VehicleCard-main {
+
+  padding: 0px 50px;
+}
+
+.hero-text {
+  padding-top: 13rem;
+  padding-bottom: 3rem;
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.hero-text h1 {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.hero-text-img {
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  top: 0;
+  left: 0;
+
+
+}
+
+.hero-text h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+
+}
+
+.hero-text p {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-top: 10px;
+
+
+}
+
+.reserve-now {
+  text-align: center;
+
+}
+
+.reserve-now-btn {
+  display: inline-block;
+  border-radius: 15px;
+  border: none;
+  background: #FDC323;
+  color: rgb(0, 0, 0);
+  font-family: inherit;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  box-shadow: 0px 14px 56px -11px #FDC323;
+  width: 11em;
+  padding: 13px 10px;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.reserve-now-btn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.4s;
+}
+
+.reserve-now-btn span:after {
+  content: 'NOW';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -10px;
+  transition: 0.7s;
+}
+
+
+.reserve-now-btn:hover span {
+  padding-right: 2.85em;
+}
+
+.reserve-now-btn:hover span:after {
+  opacity: 4;
+  right: 0;
+}
+
+
+/* call now button  */
+
+.call-now-btn-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.call-now-btn-content {
+  display: flex;
+  align-items: center;
+  padding: 5px 40px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  color: var(--color-text);
+  background: #FDC323;
+  transition: 1s;
+  border-radius: 100px;
+  cursor: pointer;
+
+}
+
+.call-now-btn-content:hover,
+.call-now-btn-content:focus {
+  transition: 0.5s;
+  -webkit-animation: call-now-btn-content 1s;
+  animation: call-now-btn-content 1s;
+  outline: 0.1em solid transparent;
+  outline-offset: 0.2em;
+  box-shadow: 0 0 0.4em 0 #c9fa3d;
+  background-color: #c9fa3d;
+}
+
+.call-now-btn-content .call-now-icon-arrow {
+  transition: 0.5s;
+  margin-right: 0px;
+  transform: scale(0.6);
+}
+
+.call-now-btn-content:hover .call-now-icon-arrow {
+  transition: 0.5s;
+  margin-right: 25px;
+}
+
+.call-now-icon-arrow {
+  width: 20px;
+  margin-left: 15px;
+  position: relative;
+  top: 6%;
+}
+
+.call-now-btn-title {
+  color: #2d2d2d !important;
+  font-weight: 600 !important;
+}
+
+/* Rest of the CSS remains unchanged */
+
+/* SVG animations */
+@keyframes color_anim {
+  0% {
+    fill: white;
+  }
+
+  50% {
+    fill: #FDC323;
+  }
+
+  100% {
+    fill: white;
+  }
+}
+
+/* Button animations */
+@-webkit-keyframes call-now-btn-content {
+  0% {
+    outline: 0.2em solid #FDC323;
+    outline-offset: 0;
+  }
+}
+
+@keyframes call-now-btn-content {
+  0% {
+    outline: 0.2em solid #FDC323;
+    outline-offset: 0;
+  }
+}
+
+.call-new-btn {
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  background-color: rgb(161, 255, 20);
+  border-radius: 30px;
+  color: rgb(19, 19, 19);
+  font-weight: 600;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  transition-duration: 0.2s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.116);
+  font-size: 2.7rem;
+  padding: 10px 20px;
+  transition-duration: 0.5s;
+  background-color: #fec601;
+  padding: 15px 25px;
+  border-radius: 100px;
+}
+
+.phone-icon {
+  height: 25px;
+  transition-duration: 1.5s;
+}
+
+.call-new-btn:hover {
+  background-color: #c9fa3d;
+  transition-duration: 0.5s;
+}
+
+.call-new-btn:active {
+  transform: scale(0.97);
+  transition-duration: 0.2s;
+}
+
+.call-new-btn:hover .phone-icon {
+  transform: rotate(250deg);
+  transition-duration: 1.5s;
+}
+
+
+
+
+.per-day-price {
+  font-size: 14px;
+  color: #9A9A9A;
+  margin: 30px 0;
+
+}
+
+.per-day-price span {
+  font-size: 25px;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+.hidden-car {
+  transform: scale(0.7);
+  transition: transform 0.3s ease;
+}
+
+
+/* NotFoundPage.css */
+.not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.not-found-content {
+  text-align: center;
+}
+
+.not-found-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+/* Add more styles as needed */
+/* General styles for all devices */
+ 
+@media only screen and (max-width: 768px) {
+  .book-car-title span {
+    font-size:1.5rem;
+    font-weight: 700;
+    padding: 0px 50px 10px 50px;
+    text-align: center;
+    color: #090808;
+    background-color: #FDC323;
+    border-radius: 0px 0px 40px 40px;
+}
+
+.book-content__box {
+  padding: 10px 20px;
+}
+
+.contact-div__text h2 {
+  font-size: 2rem;
+ 
+}
+
+.contact-div__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 100%;
+}
+
+.contact-div {
+  display: grid;
+ 
+  gap: 3rem;
+  margin: 0 auto;
+  color: #010103;
+  padding: 0rem 0rem;
+  background-image: url("/src/images/banners/bg-contact.png");
+  background-size: auto;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.call-new-btn {
+  font-size:1rem ;}
+
+}
+ 
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  
+}
+
+ 
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+   
+}
+
+ 
+@media only screen and (min-width: 1201px) {
+  
+}
