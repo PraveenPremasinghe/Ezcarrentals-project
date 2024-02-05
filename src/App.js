@@ -14,16 +14,6 @@ import ErrorPage from "../src/Pages/NotFoundPage";
 
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDe7-cEpO0aL_GpCJeFZCafz5e4o3EHZiY",
-  authDomain: "ezcarrental-prod.firebaseapp.com",
-  databaseURL: "https://ezcarrental-prod-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "ezcarrental-prod",
-  storageBucket: "ezcarrental-prod.appspot.com",
-  messagingSenderId: "1080956829194",
-  appId: "1:1080956829194:web:797d0cac6d8d7c51fe69f3",
-  measurementId: "G-W99BGF6M2N"
-};
 
 
 function App() {
