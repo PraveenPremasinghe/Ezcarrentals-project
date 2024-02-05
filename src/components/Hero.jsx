@@ -1,29 +1,20 @@
-import { Link } from "react-router-dom";
-import BgShape from "../images/hero/hero-bg.png";
-import HeroCar from "../images/hero/main-car.png";
-import HeroTextImage from "../images/hero/letteringt.png";
-import HeroSecondImg from "../images/hero/HeroSecondImg-ai-brush-removebg-2ien9sy.png";
 import { useEffect, useState } from "react";
+import Slider from "react-slick";
+import HeroTextImage from "../images/hero/letteringt.png";
 import "../styles/main.css";
 import VehicleCard from "./VehicleCard ";
-import Slider from "react-slick";
 
 import car1 from "../images/hero/cars/car1.png";
 import car2 from "../images/hero/cars/car2.png";
-import { Card, CardMedia, Typography, styled, Box } from "@mui/material";
 
-import { FaCar, FaCog, FaDoorOpen, FaDollarSign } from "react-icons/fa";
 
-import { LuArmchair } from "react-icons/lu";
-import { GiCarDoor } from "react-icons/gi";
-import { FaGears } from "react-icons/fa6";
+
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 function Hero() {
-  const [goUp, setGoUp] = useState(false);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: (0, 0), behavior: "smooth" });
-  };
+  const storage = getStorage();
+  const firestore = getFirestore();
 
   const bookBtn = () => {
     document
@@ -31,20 +22,7 @@ function Hero() {
       .scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    const onPageScroll = () => {
-      if (window.pageYOffset > 600) {
-        setGoUp(true);
-      } else {
-        setGoUp(false);
-      }
-    };
-    window.addEventListener("scroll", onPageScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onPageScroll);
-    };
-  }, []);
+ 
 
   const settings = {
     dots: false,
@@ -74,6 +52,27 @@ function Hero() {
     ],
   };
 
+  useEffect(() => {
+    fetchVehicleDetails();
+  }, []);
+
+    //vehicleDetails
+    const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
+
+  const fetchVehicleDetails = async () => {
+    const vehiclesCollection = collection(firestore, "vehicles");
+    const vehiclesSnapshot = await getDocs(vehiclesCollection);
+    const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setVehicleDetailsData(vehiclesData);
+    console.log(vehiclesData);
+  };
+
+
+ 
+
   return (
     <>
       {/* ******************* * imeplement new code here **************************** */}
@@ -97,63 +96,35 @@ function Hero() {
 
           <div className="reserve-now">
             <button onClick={bookBtn} class="reserve-now-btn">
-              <span> RESERVE</span>
+              <span> Request a Quote</span>
             </button>
           </div>
 
           <div className="home-page-car-section">
-            <Slider {...settings}>
-              <div className="VehicleCard-main">
-                <VehicleCard
-                  imageUrl={car1}
-                  vehicleName="Toyota Axio"
-                  category="Economy"
-                  doors="4"
-                  seats="4"
-                  transmission="Automatic"
-                  perDayPrice="80"
-                />
-              </div>
-              <div className="VehicleCard-main">
-                <VehicleCard
-                  imageUrl={car2}
-                  vehicleName="Toyota Axio"
-                  category="Economy"
-                  doors="4"
-                  seats="4"
-                  transmission="Automatic"
-                  perDayPrice="80"
-                />
-              </div>
-              <div className="VehicleCard-main">
-                <VehicleCard
-                  imageUrl={car1}
-                  vehicleName="Toyota Axio"
-                  category="Economy"
-                  doors="4"
-                  seats="4"
-                  transmission="Automatic"
-                  perDayPrice="80"
-                />
-              </div>
-
-              <div className="VehicleCard-main">
-                <VehicleCard
-                  imageUrl={car2}
-                  vehicleName="Toyota Axio"
-                  category="Economy"
-                  doors="4"
-                  seats="4"
-                  transmission="Automatic"
-                  perDayPrice="80"
-                />
-              </div>
-
-              {/* Add more sets of VehicleCard components for additional slides */}
-            </Slider>
+      <Slider {...settings}>
+        {vehicleDetailsData.map((vehicle, index) => (
+          <div key={index} className="VehicleCard-main">
+            <VehicleCard
+              imageUrl={vehicle.imageUrl}
+              vehicleName={vehicle.vehicleName}
+              category={vehicle.category}
+              doors={vehicle.doors}
+              seats={vehicle.seats}
+              transmission={vehicle.transmission}
+              perDayPrice={vehicle.perDayPrice}
+            />
+            
           </div>
+        ))}
+      </Slider>
+    </div>
+
         </div>
       </section>
+
+   
+
+      
 
       {/* ******************* * imeplement new code here **************************** */}
     </>

@@ -18,6 +18,29 @@ function OurService() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024, // Adjust the breakpoint as needed
+        settings: {
+          slidesToShow: 3, // Number of slides to show at this breakpoint
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (

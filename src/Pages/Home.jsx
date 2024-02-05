@@ -11,6 +11,16 @@ import Faq from "../components/Faq";
 import Footer from "../components/Footer";
 
 function Home() {
+
+
+
+
+  const handleWhatsAppCall = () => {
+    const phoneNumber = "0400920512";
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+    window.open(whatsappUrl, '_blank');
+  };
+  
   return (
     <>
       <Navbar />
@@ -25,6 +35,21 @@ function Home() {
       <Faq />
  
       <Footer />
+
+
+      <div>
+      <button onClick={handleWhatsAppCall}>
+      <div class="wh-api">
+	<div class="wh-fixed whatsapp-pulse">
+		 
+			<button class="wh-ap-btn"></button>
+		 
+	</div>
+</div>
+      </button>
+      
+    </div>
+    
     </>
   );
 }
