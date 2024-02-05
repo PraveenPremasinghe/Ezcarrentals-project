@@ -7,7 +7,7 @@ import {
 
 function Footer() {
   const emailAddress = "ezcarrentalsmelbourne@gmail.com";
-  const phoneNumber = "+610400920512";
+  const phoneNumber = "0400 920 512";
 
   return (
     <>
@@ -59,6 +59,7 @@ function Footer() {
           </div>
         </div>
       </footer>
+      
       <div className="footer-bottom">
         Designed and Developed by Zero I N D E X &copy; 2024 All Rights Reserved
       </div>

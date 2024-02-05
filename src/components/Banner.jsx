@@ -1,4 +1,15 @@
 function Banner() {
+ 
+
+  const handleCallNowClick = () => {
+    document
+    .querySelector(".contact-page")
+    .scrollIntoView({ behavior: "smooth" });
+  };
+
+ 
+ 
+
   return (
     <>
       <section className="banner-section">
@@ -11,7 +22,7 @@ function Banner() {
               </p>
 
               <div className="call-now-btn-container">
-                <div className="call-now-btn-content">
+                <div className="call-now-btn-content " onClick={handleCallNowClick}>
                   <span className="call-now-btn-title">Call Now</span>
                   <span className="call-now-icon-arrow">
                     <svg
