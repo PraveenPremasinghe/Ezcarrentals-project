@@ -169,9 +169,7 @@ function Faq() {
             <div className="text-content">
               <h2>Book a car by getting in touch with us </h2>
               <span>
-                {/* <a href={`tel:${phoneNumber}`}>
-  <FaHeadphonesAlt    />&nbsp; {phoneNumber}
-</a> */}
+         
 
                 <button className="call-new-btn">
                   <FaPhoneAlt className="phone-icon" />

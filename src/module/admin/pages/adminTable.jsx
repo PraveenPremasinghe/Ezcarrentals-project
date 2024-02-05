@@ -1,5 +1,8 @@
 import React,{useEffect,useState} from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton ,Container} from '@mui/material';
+import { MdDeleteForever } from "react-icons/md";
+import { AiFillEdit } from "react-icons/ai";
+ 
 import {
   getAuth,
   onAuthStateChanged,
@@ -69,6 +72,8 @@ const AdminTable = ({ data, onEdit }) => {
  
 
   return (
+
+    <Container  mt={5}>
     <TableContainer component={Paper}
     >
       <Table
@@ -97,14 +102,25 @@ const AdminTable = ({ data, onEdit }) => {
                 <img src={item.imageUrl} alt="Vehicle" style={{ width: '50px', height: 'auto' }} />
               </TableCell>
               <TableCell>
-                <IconButton onClick={() => onEdit(item)}>Edit</IconButton>
-                <IconButton onClick={() => onDelete(item.id,item.imageUrl)}>Delete</IconButton>
+              
+                <IconButton onClick={() => onEdit(item)} aria-label="edit">
+             
+                <AiFillEdit />
+      </IconButton>
+
+      <IconButton onClick={() => onDelete(item.id,item.imageUrl)} aria-label="delete"
+      sx={{color:'red'}}>
+      <MdDeleteForever />
+      </IconButton>
+
+
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    </Container>
   );
 };
 

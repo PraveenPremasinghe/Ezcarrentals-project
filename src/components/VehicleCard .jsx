@@ -23,6 +23,7 @@ const CustomCard = styled(Card)({
   overflow: "hidden",
   transition: "height 0.3s",
   cursor: "pointer",
+  boxShadow: "none",
   "&:hover": {
     height: "500px",
     "& $CustomCardMedia": {
