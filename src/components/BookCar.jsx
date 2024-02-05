@@ -127,10 +127,9 @@ function BookCar() {
       zipcode: zipcode,
     };
 
-    emailjs
-      .send("service_rvlyjik", "template_8goef6h", payload, "ktQrDTyVKzeQHyG3a")
-      .then(
-        (result) => {
+
+    emailjs.send(process.env.EMAIL_SERVIC_ID, process.env.EMAIL_TEMPLATE_ID, payload, process.env.EMAIL_PUBLIC_KEY)
+      .then((result) => {
           console.log(result.text);
           setModal(!modal);
           const doneMsg = document.querySelector(".booking-done");
