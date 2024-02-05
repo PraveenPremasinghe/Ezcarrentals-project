@@ -1,7 +1,8 @@
 import React,{useEffect,useState} from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton ,Container} from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton ,Container,Typography,Button,Box} from '@mui/material';
 import { MdDeleteForever } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
+import { Link } from 'react-router-dom';
  
 import {
   getAuth,
@@ -74,6 +75,20 @@ const AdminTable = ({ data, onEdit }) => {
   return (
 
     <Container  mt={5}>
+
+<Typography variant="h4" align="center" gutterBottom mt={5} mb={5}>
+        Vehicle Details
+      </Typography>
+
+      <Box sx={{ float: 'right', mb: 3 }}>
+   
+      <Link to="/upload-details">
+        <Button variant="contained">
+          Add new Vehicle
+        </Button>
+      </Link>
+    </Box>
+
     <TableContainer component={Paper}
     >
       <Table

@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Select,
@@ -10,19 +10,19 @@ import {
   Box,
   Typography,
   Card,
-  Stack
-} from '@mui/material';
-import { useDropzone } from 'react-dropzone';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+  Stack,
+} from "@mui/material";
+import { useDropzone } from "react-dropzone";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   getStorage,
   ref as storageRef,
   uploadBytesResumable,
   getDownloadURL,
-} from 'firebase/storage';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import {useNavigate } from 'react-router-dom'
-
+} from "firebase/storage";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const VehicleForm = () => {
   const navigate = useNavigate();
@@ -30,11 +30,11 @@ const VehicleForm = () => {
   const storage = getStorage();
   const firestore = getFirestore();
 
-  const [vehicleName, setVehicleName] = useState('');
-  const [perDayPrice, setPerDayPrice] = useState('');
-  const [category, setCategory] = useState('');
-  const [title, setTitle] = useState('');
-  const [doors, setDoors] = useState('');
+  const [vehicleName, setVehicleName] = useState("");
+  const [perDayPrice, setPerDayPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [title, setTitle] = useState("");
+  const [doors, setDoors] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [progress, setProgress] = useState(0);
 
@@ -44,34 +44,30 @@ const VehicleForm = () => {
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: "image/*",
     onDrop,
   });
 
-  
-      useEffect(()=>{
-        onAuthStateChanged(auth, (user) => {
-          console.log("🚀 ~ onAuthStateChanged ~ user:", user)
-          
-            if (user===null) {
-              // const uid = user.uid;
-              navigate("/admin-login")
- 
-            }
-          });
-         
-    }, [])
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log("🚀 ~ onAuthStateChanged ~ user:", user);
 
+      if (user === null) {
+        // const uid = user.uid;
+        navigate("/admin-login");
+      }
+    });
+  }, []);
 
-    const handleSubmit = (e) => {
-      console.log('upload')
-       e.preventDefault();
+  const handleSubmit = (e) => {
+    console.log("upload");
+    e.preventDefault();
     if (uploadedImage) {
-       const StorageRef = storageRef(storage,`images/${uploadedImage.name}`);
- const uploadTask = uploadBytesResumable(StorageRef, uploadedImage);
+      const StorageRef = storageRef(storage, `images/${uploadedImage.name}`);
+      const uploadTask = uploadBytesResumable(StorageRef, uploadedImage);
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snapshot) => {
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -83,26 +79,26 @@ const VehicleForm = () => {
         },
         async () => {
           const downloadURL = await getDownloadURL(StorageRef);
-               try {
-            await addDoc(collection(firestore, 'vehicles'), {
+          try {
+            await addDoc(collection(firestore, "vehicles"), {
               timestamp: new Date(),
               vehicleName: vehicleName,
               imageUrl: downloadURL,
               perDayPrice: perDayPrice,
-              category:category,
-              title:title,
-              doors:doors
+              category: category,
+              title: title,
+              doors: doors,
             });
 
             setProgress(0);
-            setVehicleName('');
-            setPerDayPrice('');
-            setCategory('');
-            setTitle('');
-            setDoors('');
+            setVehicleName("");
+            setPerDayPrice("");
+            setCategory("");
+            setTitle("");
+            setDoors("");
             setUploadedImage(null);
           } catch (error) {
-            console.error('Error adding document: ', error);
+            console.error("Error adding document: ", error);
           }
         }
       );
@@ -110,92 +106,110 @@ const VehicleForm = () => {
   };
 
   return (
-
     <Box
-    sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',  
-      bgcolor: '#F6F6F6',
-    }}
-  >
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        bgcolor: "#F6F6F6",
+      }}
+    >
+      <Container>
+        <Card sx={{ p: 3, borderRadius: "14px" }}>
+          <Box sx={{ float: "right", mb: 3 }}>
+            <Link to="/admin-table">
+              <Button variant="contained">Vehicle Details Table</Button>
+            </Link>
+          </Box>
 
-    <Container>
+          <Typography variant="h5" align="center" gutterBottom>
+            Vehicle Information Form
+          </Typography>
 
-        
+          <Box component="form" onSubmit={handleSubmit}>
+            <TextField
+              label="Vehicle Name"
+              fullWidth
+              margin="normal"
+              value={vehicleName}
+              onChange={(e) => setVehicleName(e.target.value)}
+              sx={{ "& label": { fontSize: "0.8rem" } }}
+            />
 
-        <Card 
-        sx={{p:3,borderRadius:'14px' }}>
-      <Typography variant="h5" align="center" gutterBottom>
-        Vehicle Information Form
-      </Typography>
-      
+            <TextField
+              label="Per Day Price"
+              fullWidth
+              margin="normal"
+              type="number"
+              value={perDayPrice}
+              onChange={(e) => setPerDayPrice(e.target.value)}
+              sx={{ "& label": { fontSize: "0.8rem" } }}
+            />
 
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          label="Vehicle Name"
-          fullWidth
-          margin="normal"
-          value={vehicleName}
-          onChange={(e) => setVehicleName(e.target.value)}
-          sx={{ '& label': { fontSize: '0.8rem' } }} 
-        />
+            <FormControl fullWidth margin="normal">
+              <InputLabel sx={{ fontSize: "0.8rem" }}>Category</InputLabel>
+              <Select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                sx={{ "& label": { fontSize: "0.8rem" } }}
+              >
+                <MenuItem value="ECONOMY">Economy</MenuItem>
+                <MenuItem value="COMFORT">Comfort</MenuItem>
+                <MenuItem value="PREMIUM">Premium</MenuItem>
+              </Select>
+            </FormControl>
 
-        <TextField
-          label="Per Day Price"
-          fullWidth
-          margin="normal"
-          type="number"
-          value={perDayPrice}
-          onChange={(e) => setPerDayPrice(e.target.value)}
-        />
+            <TextField
+              label="Title (Vehicle Inner Details)"
+              fullWidth
+              margin="normal"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              sx={{ "& label": { fontSize: "0.8rem" } }}
+            />
 
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Category</InputLabel>
-          <Select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <MenuItem value="ECONOMY">Economy</MenuItem>
-            <MenuItem value="COMFORT">Comfort</MenuItem>
-            <MenuItem value="PREMIUM">Premium</MenuItem>
-          </Select>
-        </FormControl>
+            <FormControl fullWidth margin="normal">
+              <InputLabel sx={{ fontSize: "0.8rem" }}>Doors</InputLabel>
+              <Select
+                value={doors}
+                onChange={(e) => setDoors(e.target.value)}
+                label="Doors"
+              >
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="5">5</MenuItem>
+                <MenuItem value="6">6</MenuItem>
+              </Select>
+            </FormControl>
 
-        <TextField
-          label="Title (Vehicle Inner Details)"
-          fullWidth
-          margin="normal"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+            <div
+              {...getRootProps()}
+              style={{
+                margin: "16px 0",
+                padding: "16px",
+                border: "1px dashed #ccc",
+                fontSize: "0.8rem",
+              }}
+            >
+              <input {...getInputProps()} />
+              <p>Drag 'n' drop an image here, or click to select an image</p>
+              {uploadedImage && (
+                <img
+                  src={URL.createObjectURL(uploadedImage)}
+                  alt="Uploaded"
+                  style={{ width: "100%" }}
+                />
+              )}
+            </div>
 
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Doors</InputLabel>
-          <Select
-            value={doors}
-            onChange={(e) => setDoors(e.target.value)}
-          >
-            <MenuItem value="4">4</MenuItem>
-            <MenuItem value="2">2</MenuItem>
-            {/* Add other options as needed */}
-          </Select>
-        </FormControl>
-
-        <div {...getRootProps()} style={{ margin: '16px 0', padding: '16px', border: '1px dashed #ccc' }}>
-          <input {...getInputProps()} />
-          <p>Drag 'n' drop an image here, or click to select an image</p>
-          {uploadedImage && <img src={URL.createObjectURL(uploadedImage)} alt="Uploaded" style={{ width: '100%' }} />}
-        </div>
-
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
-      </Box>
-      </Card>
-    </Container>
-   </Box>
+            <Button variant="contained" color="primary" type="submit">
+              Submit
+            </Button>
+          </Box>
+        </Card>
+      </Container>
+    </Box>
   );
 };
 
