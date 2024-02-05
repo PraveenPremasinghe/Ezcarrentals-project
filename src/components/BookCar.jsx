@@ -68,10 +68,10 @@ function BookCar() {
 
     emailjs
       .send(
-        process.env.EMAIL_SERVIC_ID,
-        process.env.EMAIL_TEMPLATE_ID,
+        process.env.REACT_APP_EMAIL_SERVIC_ID,
+        process.env.REACT_APP_EMAIL_TEMPLATE_ID,
         payload,
-        process.env.EMAIL_PUBLIC_KEY
+        process.env.REACT_APP_EMAIL_PUBLIC_KEY
       )
       .then(
         (result) => {
