@@ -51,8 +51,10 @@ const VehicleForm = () => {
   
       useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
-            if (!user) {
-              const uid = user.uid;
+          console.log("🚀 ~ onAuthStateChanged ~ user:", user)
+          
+            if (user===null) {
+              // const uid = user.uid;
               navigate("/admin-login")
  
             }

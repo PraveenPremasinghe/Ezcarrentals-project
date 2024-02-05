@@ -34,12 +34,12 @@ const AdminTable = ({ data, onEdit }) => {
 
    useEffect(() => {
             onAuthStateChanged(auth, (user) => {
-            if (user) {
-              const uid = user.uid;
-              navigate("/admin-table")
-              // ...
-              console.log("uid", uid)
-            }
+            
+              if (user===null) {
+                // const uid = user.uid;
+                navigate("/admin-login")
+   
+              }
           });
     fetchVehicleDetails();
   }, [firestore]);
