@@ -1,8 +1,6 @@
 import {
-  FaPhoneVolume,
   FaEnvelopeOpenText,
-  FaLocationArrow,
-  FaHeadphonesAlt,
+  FaPhoneVolume
 } from "react-icons/fa";
 
 function Footer() {
@@ -59,9 +57,9 @@ function Footer() {
           </div>
         </div>
       </footer>
-      
+
       <div className="footer-bottom">
-        Designed and Developed by Zero I N D E X &copy; 2024 All Rights Reserved
+        Designed and Developed by <a href="https://praveenpremasinghe-me.netlify.app/"> Zero I N D E X </a> &copy; 2024 All Rights Reserved
       </div>
     </>
   );

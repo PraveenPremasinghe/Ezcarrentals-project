@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { getStorage, ref as storageRef } from "firebase/storage";
 import emailjs from "@emailjs/browser";
-import Select from "react-select";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { FaArrowCircleRight } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { useEffect, useState } from "react";
+import { FaArrowCircleRight } from "react-icons/fa";
+import Select from "react-select";
 
 function BookCar() {
   const storage = getStorage();
@@ -75,19 +75,18 @@ function BookCar() {
       )
       .then(
         (result) => {
-
           const doneMsg = document.querySelector(".booking-done");
           doneMsg.style.display = "flex";
         },
         (error) => {
-          console.log(error.text);
+        
         }
       );
   };
 
   // taking value of booking inputs
   const handleCar = (e) => {
-    console.log(e);
+ 
     setCarType(e);
     const selectedDate = vehicleDetailsData.find((data) => data.id === e.value);
     setCarImg(selectedDate.imageUrl);
@@ -102,7 +101,7 @@ function BookCar() {
       ...doc.data(),
     }));
     setVehicleDetailsData(vehiclesData);
-    console.log("car details",vehiclesData);
+ 
   };
 
   // hide message
@@ -136,7 +135,7 @@ function BookCar() {
               </p>
 
               <p className="booking-done">
-                Thank You for Booking with us!
+                Thank You for Requesting  us!
                 <i onClick={hideMessage} className="fa-solid fa-xmark"></i>
               </p>
 
@@ -151,6 +150,7 @@ function BookCar() {
                     onChange={handleCar}
                     options={CarList}
                     placeholder="Select your car type"
+                    
                   />
                 </div>
 
@@ -167,7 +167,7 @@ function BookCar() {
                     required
                     value={name}
                     onChange={handleName}
-                    sx={{ m: 0 }}
+                    sx={{ m: 0 , cursor:'auto'}}
                   />
                 </div>
 
@@ -227,7 +227,7 @@ function BookCar() {
                   </label>
                   <div className="search-btn">
                     <button onClick={confirmBooking} type="submit">
-                    Request &nbsp; <FaArrowCircleRight />
+                      Request &nbsp; <FaArrowCircleRight />
                     </button>
                   </div>
                 </div>

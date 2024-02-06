@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../images/logo/Ezcarrentals-logo.png";
-import { useState } from "react";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
@@ -9,11 +9,7 @@ function Navbar() {
     setNav(!nav);
   };
 
-  const handleFaqClick = () => {
-    document
-      .querySelector(".contact-div")
-      .scrollIntoView({ behavior: "smooth" });
-  };
+
 
   const handleServiceClick = () => {
     document
@@ -21,15 +17,15 @@ function Navbar() {
       .scrollIntoView({ behavior: "smooth" });
   };
 
-  const handelTestimonialsclick = () => {
+  const handelTestimonialsClick = () => {
     document
       .querySelector(".testimonials-section")
       .scrollIntoView({ behavior: "smooth" });
   };
 
-  const handelContactusclick = () => {
+  const handelContactusClick = () => {
     document
-      .querySelector(".contact-div")
+      .querySelector(".contact-page")
       .scrollIntoView({ behavior: "smooth" });
   };
 
@@ -75,11 +71,7 @@ function Navbar() {
                 Home
               </Link>
             </li>
-            <li>
-              <Link className="about-link" to="#" onClick={handleFaqClick}>
-                About
-              </Link>
-            </li>
+           
             <li>
               <Link className="about-link" to="#" onClick={handleServiceClick}>
                 Our Service
@@ -90,7 +82,7 @@ function Navbar() {
               <Link
                 className="testi-link"
                 to="#"
-                onClick={handelTestimonialsclick}
+                onClick={handelTestimonialsClick}
               >
                 Testimonials
               </Link>
@@ -101,7 +93,7 @@ function Navbar() {
               <Link
                 className="testi-link"
                 to="#"
-                onClick={handelContactusclick}
+                onClick={handelContactusClick}
               >
                 Contact us
               </Link>
