@@ -56,12 +56,10 @@ function BookCar() {
 
   // confirm modal booking
   const confirmBooking = (e) => {
-
-    console.log(process.env.REACT_APP_EMAIL_SERVICE_ID)
     e.preventDefault();
 
     const payload = {
-      carType: carType,
+      carType: carType.label,
       name: name,
       phone: phone,
       email: email,
@@ -77,7 +75,6 @@ function BookCar() {
       )
       .then(
         (result) => {
-          console.log(result.text);
 
           const doneMsg = document.querySelector(".booking-done");
           doneMsg.style.display = "flex";
