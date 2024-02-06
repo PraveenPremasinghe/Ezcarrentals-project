@@ -65,7 +65,7 @@ function Home() {
 
 
       <div className="wh-api-bg">
-      <button onClick={handleWhatsAppCall}>
+      <div onClick={handleWhatsAppCall}>
       <div className="wh-api">
 	<div className="wh-fixed whatsapp-pulse">
 		 
@@ -73,7 +73,7 @@ function Home() {
 		 
 	</div>
 </div>
-      </button>
+      </div>
       
     </div>
 
