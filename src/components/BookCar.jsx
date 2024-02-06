@@ -68,7 +68,7 @@ function BookCar() {
 
     emailjs
       .send(
-        process.env.REACT_APP_EMAIL_SERVIC_ID,
+        process.env.REACT_APP_EMAIL_SERVICE_ID,
         process.env.REACT_APP_EMAIL_TEMPLATE_ID,
         payload,
         process.env.REACT_APP_EMAIL_PUBLIC_KEY
