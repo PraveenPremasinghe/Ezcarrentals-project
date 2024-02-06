@@ -56,6 +56,8 @@ function BookCar() {
 
   // confirm modal booking
   const confirmBooking = (e) => {
+
+    console.log(process.env.REACT_APP_EMAIL_SERVICE_ID)
     e.preventDefault();
 
     const payload = {
