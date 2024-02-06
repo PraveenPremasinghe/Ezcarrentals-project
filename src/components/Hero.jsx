@@ -101,7 +101,7 @@ function Hero() {
           </div>
 
           <div className="home-page-car-section">
-      <Slider {...settings}>
+      {/* <Slider {...settings}> */}
         {vehicleDetailsData.map((vehicle, index) => (
           <div key={index} className="VehicleCard-main">
             <VehicleCard
@@ -116,7 +116,7 @@ function Hero() {
             
           </div>
         ))}
-      </Slider>
+      {/* </Slider> */}
     </div>
 
         </div>
