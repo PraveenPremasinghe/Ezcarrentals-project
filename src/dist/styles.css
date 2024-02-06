@@ -1766,6 +1766,10 @@ footer {
   padding: 20px;
 }
 
+.footer-bottom a{
+  color: #fff;
+}
+
 .footer-content {
   display: grid;
   color: #2d2d2d;
@@ -2548,4 +2552,22 @@ footer {
 
 .custom-next {
   right: 20px;
+}
+
+
+.client-feedback {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  bottom:0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  pointer-events: none;
+  z-index: 999;
+  width: 221px;
+  height: 61px;
+  pointer-events: none!important;
 }

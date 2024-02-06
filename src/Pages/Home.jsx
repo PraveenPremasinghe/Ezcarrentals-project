@@ -7,12 +7,13 @@ import Navbar from "../components/Navbar";
 
 import Testimonials from "../components/Testimonials";
 import Faq from "../components/Faq";
- 
+import React, { useState, useEffect } from 'react';
+import { FaArrowUp } from 'react-icons/fa';
 import Footer from "../components/Footer";
 
 function Home() {
 
-
+  const [isVisible, setIsVisible] = useState(false);
 
 
   const handleWhatsAppCall = () => {
@@ -20,6 +21,32 @@ function Home() {
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, '_blank');
   };
+
+
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
+  }, []);
+
   
   return (
     <>
@@ -37,17 +64,25 @@ function Home() {
       <Footer />
 
 
-      <div>
+      <div className="wh-api-bg">
       <button onClick={handleWhatsAppCall}>
-      <div class="wh-api">
-	<div class="wh-fixed whatsapp-pulse">
+      <div className="wh-api">
+	<div className="wh-fixed whatsapp-pulse">
 		 
-			<button class="wh-ap-btn"></button>
+			<button className="wh-ap-btn"></button>
 		 
 	</div>
 </div>
       </button>
       
+    </div>
+
+    <div className="scroll-up-button">
+      {isVisible && (
+        <button onClick={scrollToTop}>
+          <FaArrowUp />
+        </button>
+      )}
     </div>
     
     </>

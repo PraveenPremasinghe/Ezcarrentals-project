@@ -4,10 +4,6 @@ import HeroTextImage from "../images/hero/letteringt.png";
 import "../styles/main.css";
 import VehicleCard from "./VehicleCard ";
 
-import car1 from "../images/hero/cars/car1.png";
-import car2 from "../images/hero/cars/car2.png";
-
-
 
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -22,19 +18,17 @@ function Hero() {
       .scrollIntoView({ behavior: "smooth" });
   };
 
- 
-
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024, // Adjust this breakpoint as needed
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 5,
         },
       },
       {
@@ -56,8 +50,8 @@ function Hero() {
     fetchVehicleDetails();
   }, []);
 
-    //vehicleDetails
-    const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
+  //vehicleDetails
+  const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
 
   const fetchVehicleDetails = async () => {
     const vehiclesCollection = collection(firestore, "vehicles");
@@ -69,9 +63,6 @@ function Hero() {
     setVehicleDetailsData(vehiclesData);
     console.log(vehiclesData);
   };
-
-
- 
 
   return (
     <>
@@ -101,30 +92,24 @@ function Hero() {
           </div>
 
           <div className="home-page-car-section">
-      <Slider {...settings}>
-        {vehicleDetailsData.map((vehicle, index) => (
-          <div key={index} className="VehicleCard-main">
-            <VehicleCard
-              imageUrl={vehicle.imageUrl}
-              vehicleName={vehicle.vehicleName}
-              category={vehicle.category}
-              doors={vehicle.doors}
-              seats={vehicle.seats}
-              transmission={vehicle.transmission}
-              perDayPrice={vehicle.perDayPrice}
-            />
-            
+            <Slider {...settings}>
+              {vehicleDetailsData.map((vehicle, index) => (
+                <div key={index} className="VehicleCard-main"  onClick={bookBtn}>
+                  <VehicleCard
+                    imageUrl={vehicle.imageUrl}
+                    vehicleName={vehicle.vehicleName}
+                    category={vehicle.category}
+                    doors={vehicle.doors}
+                    seats={vehicle.seats}
+                    transmission={vehicle.transmission}
+                    perDayPrice={vehicle.perDayPrice}
+                  />
+                </div>
+              ))}
+            </Slider>
           </div>
-        ))}
-      </Slider>
-    </div>
-
         </div>
       </section>
-
-   
-
-      
 
       {/* ******************* * imeplement new code here **************************** */}
     </>
