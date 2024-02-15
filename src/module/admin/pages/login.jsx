@@ -31,7 +31,7 @@ const LoginForm = () => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
+            
         });
   };
 
@@ -41,8 +41,7 @@ const LoginForm = () => {
             if (user) {
               const uid = user.uid;
               navigate("/upload-details")
-              // ...
-              console.log("uid", uid)
+          
             }
           });
          

@@ -61,7 +61,7 @@ function Hero() {
       ...doc.data(),
     }));
     setVehicleDetailsData(vehiclesData);
-    console.log(vehiclesData);
+   
   };
 
   return (

@@ -32,6 +32,13 @@ function BookCar() {
 
   //vehicleDetails
   const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
+  const [formValid, setFormValid] = useState(false);
+
+  
+
+  useEffect(() => {
+    setFormValid(validateForm());
+  }, [carType, name, phone, email, message]);
 
   // taking value of modal inputs
   const handleName = (e) => {
@@ -57,6 +64,12 @@ function BookCar() {
   // confirm modal booking
   const confirmBooking = (e) => {
     e.preventDefault();
+
+     // Check if any field is empty
+  if (!carType || !name || !phone || !email || !message) {
+    setError(true); // Set error state to true
+    return; // Exit the function early
+  }
 
     const payload = {
       carType: carType.label,
@@ -115,6 +128,21 @@ function BookCar() {
     label: data.vehicleName,
   }));
 
+  const validateForm = () => {
+    return carType && name && phone && email && message;
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    // Use a regular expression to check if the phone number is in a valid format
+    const regex = /^\d{10}$/; // Assuming a 10-digit phone number format
+    return regex.test(phoneNumber);
+  };
+
   return (
     <>
       <section id="booking-section" className="book-section">
@@ -126,6 +154,7 @@ function BookCar() {
                 <span>Request a Quote</span>{" "}
               </h2>
 
+              {error && ( // Show error message if there's an error
               <p className="error-message">
                 <Alert severity="error">
                   <AlertTitle>
@@ -133,6 +162,7 @@ function BookCar() {
                   </AlertTitle>
                 </Alert>
               </p>
+            )}
 
               <p className="booking-done">
                 Thank You for Requesting  us!
@@ -150,6 +180,7 @@ function BookCar() {
                     onChange={handleCar}
                     options={CarList}
                     placeholder="Select your car type"
+                    isSearchable={false}
                     
                   />
                 </div>
@@ -181,9 +212,11 @@ function BookCar() {
                     margin="normal"
                     value={phone}
                     onChange={handlePhone}
-                    type="tel"
+                    type="number"
                     fullWidth
                     required
+                    error={Boolean(phone) && !validatePhoneNumber(phone)} // Add error prop based on phone number validation
+                    helperText={Boolean(phone) && !validatePhoneNumber(phone) ? 'Invalid phone number' : ''} 
                     sx={{ m: 0 }}
                   />
                 </div>
@@ -201,6 +234,8 @@ function BookCar() {
                     value={email}
                     onChange={handleEmail}
                     type="email"
+                    error={Boolean(email) && !validateEmail(email)}  
+                    helperText={Boolean(email) && !validateEmail(email) ? 'Invalid email' : ''}
                     sx={{ m: 0 }}
                   />
                 </div>
@@ -215,9 +250,12 @@ function BookCar() {
                     variant="outlined"
                     margin="normal"
                     onChange={handleMessage}
+                    
                     fullWidth
                     required
-                    sx={{ m: 0 }}
+                    multiline // Enable multiline
+  rows={3} 
+                    sx={{ m: 0,backgroundColor:'#fff' ,borderRadius:'5px'}}
                   />
                 </div>
 
@@ -226,7 +264,7 @@ function BookCar() {
                     <i className="fa-regular fa-calendar-days "></i> &nbsp;
                   </label>
                   <div className="search-btn">
-                    <button onClick={confirmBooking} type="submit">
+                    <button onClick={confirmBooking} type="submit" disabled={!formValid}>
                       Request &nbsp; <FaArrowCircleRight />
                     </button>
                   </div>
