@@ -50,7 +50,7 @@ const VehicleForm = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("🚀 ~ onAuthStateChanged ~ user:", user);
+   
 
       if (user === null) {
         // const uid = user.uid;
@@ -60,7 +60,7 @@ const VehicleForm = () => {
   }, []);
 
   const handleSubmit = (e) => {
-    console.log("upload");
+   
     e.preventDefault();
     if (uploadedImage) {
       const StorageRef = storageRef(storage, `images/${uploadedImage.name}`);
