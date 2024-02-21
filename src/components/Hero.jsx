@@ -71,23 +71,30 @@ function Hero() {
         <div className="container ">
           <div className="hero-text">
             <h1>
-              Planning Your Next Journey With{" "}
-              <img
+              Plan Your Journey With Us Today
+              {/* <img
                 src={HeroTextImage}
                 className="hero-text-img"
                 alt="car-img"
-              ></img>
+              ></img> */}
             </h1>
 
-            <h2>EZ Car Rentals</h2>
-            <p>
-              Compare prices from the best car rental companies in the world
-            </p>
+
+<div>
+<div className="category-main">
+    <div className="category">CARS</div>
+    
+    <div className="category">UTES</div>
+    <div className="category">VANS</div>
+  </div>
+</div>
+         
+          
           </div>
 
           <div className="reserve-now">
             <button onClick={bookBtn} class="reserve-now-btn">
-              <span> Request a Quote</span>
+              <span> CALL US NOW</span>
             </button>
           </div>
 

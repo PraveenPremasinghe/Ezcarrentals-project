@@ -60,7 +60,7 @@ body {
 }
 
 .hero-text {
-  padding-top: 13rem;
+  padding-top: 11rem;
   padding-bottom: 3rem;
   color: #ffffff;
   text-align: center;
@@ -85,6 +85,7 @@ body {
 
   top: 0;
   left: 0;
+  margin: -10px 16px;
 
 
 }
@@ -573,8 +574,65 @@ button.wh-ap-btn::before {
   background-color: #007bff;
 }
 
+ 
+.category-main {
+  display: flex;
+  flex-wrap: wrap;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 10px; */
+  margin-top: 10px;
+  
+}
 
+.category-main .category:nth-child(1) {
+  border: 1px solid #fff;  
+ 
+}
 
+.category-main .category:nth-child(2) {
+  border: 1px solid#fff; 
+  
+  
+}
+
+.category-main .category:nth-child(3) {
+  border: 1px solid #fff;  
+ 
+}
+
+.category {
+  flex: 1 1;
+  text-align: center;
+  padding: 9px 51px;
+  color: #E6F4F6;
+  border-radius: 100px;
+  margin: 14px;
+  font-size: 1.5rem;
+  position: relative;
+ 
+}
+
+.category:hover {
+  background-color: #fff;
+  color: #000;
+  transition: 0.5s;
+}
+ 
+.red-text {
+  color: red;
+}
+
+.btmxSM {
+  position: relative;
+  transition: background-color 0.1s ease 0s;
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  padding: 24px;
+  background-color: rgba(17, 17, 17, 0.05);
+  border: 1px solid transparent;
+  min-height: 308px;
+}
 /* Add more styles as needed */
 /* General styles for all devices */
 

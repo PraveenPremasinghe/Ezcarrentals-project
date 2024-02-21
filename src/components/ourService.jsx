@@ -3,11 +3,41 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
+import Image1 from "../images/testimonials/Afterhours.jpg";
+import Image2 from "../images/testimonials/business.jpg";
+import Image3 from "../images/testimonials/CardropoffandPickup.jpg";
+import Image4 from "../images/testimonials/Delivery.jpg";
+import Image5 from "../images/testimonials/RoadsideAssistance.jpg";
+
 const images = [
-  "https://demo.olevmedia.net/wheelsberry/wp-content/uploads/2016/08/SHUTTERSTOCK_111951167.jpg",
-  "http://demo.olevmedia.net/wheelsberry/wp-content/uploads/2016/08/SHUTTERSTOCK_59980393.jpg",
-  "http://demo.olevmedia.net/wheelsberry/wp-content/uploads/2016/08/SHUTTERSTOCK_84012001.jpg",
+  Image1,Image2,Image3,Image4,Image5
+  
 ];
+
+const slidesContent = [
+ 
+  {
+    title: "Roadside Assistance",
+    description: "We offer roadside assistance within Melbourne region. Call us if you need any help and we will take it from there."
+  },
+  {
+    title: "Car drop off and Pick up",
+    description: "We offer car drop off and pick up service depending on our availability. We could happily drop you off to the airport for some extra $ (to be negotiated)."
+  },
+  {
+    title: "We are a local business",
+    description: "When you rent from us you help a local small business to grow."
+  },
+  {
+    title: "After hours pick up and drop off",
+    description: "We try our best to cater to your needs. Depending on our availability we will happily offer after hours rental service."
+  },
+  {
+    title: "Delivery",
+    description: "If you need a delivery from A to B. We can offer our commercial vehicles with driver too. Ask us for pricing and availability."
+  }
+];
+
 
 function OurService() {
   const settings = {
@@ -47,7 +77,7 @@ function OurService() {
         <div className="container">
           <div className="pick-container">
             <div className="pick-container__title">
-              <h3>BEST SERVICE IN THE WORLD</h3>
+              <h3>WE PRIDE OURSELVES IN OFFERING A UNNATCHED SERVICE WITH CRAZY LOW PRICING</h3>
               <h2>OUR SERVICES</h2>
               <p>
                 Choose from a variety of our amazing vehicles to rent for your
@@ -56,23 +86,18 @@ function OurService() {
             </div>
 
             <Slider {...settings}>
-              {images.map((image, index) => (
-                <div key={index} className="our-service-slider">
-                  <div className="image-slider">
-                    <img src={image} alt={`slide ${index}`} />
-                    <div className="yellow-box">
-                      <h2>Fuel Plans</h2>
-                      <p>
-                        We offer a number of convenient car rental fuel plan
-                        options. Pay in advance for a full tank of gas and bring
-                        the car back empty or simply purchase a full tank just
-                        before you return the car to the drop-off location.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
+  {images.map((image, index) => (
+    <div key={index} className="our-service-slider">
+      <div className="image-slider">
+        <img src={image} alt={`slide ${index}`} />
+        <div className="yellow-box">
+          <h2>{slidesContent[index].title}</h2>
+          <p>{slidesContent[index].description}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</Slider>
           </div>
         </div>
       </section>

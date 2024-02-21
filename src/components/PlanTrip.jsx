@@ -10,7 +10,7 @@ function PlanTrip() {
           <div className="plan-container">
             <div className="plan-container__title">
               <h3>Plan your trip now</h3>
-              <h2>Quick & easy car rental</h2>
+              <h2>QUICK & <span class="red-text">EZ</span> TO RENT</h2>
             </div>
 
             <div className="plan-container__boxes">
@@ -18,17 +18,21 @@ function PlanTrip() {
                 <img src={SelectCar} alt="icon_img" />
                 <h3>Select Car</h3>
                 <p>
-                  We offers a big range of vehicles for all your driving needs.
-                  We have the perfect car to meet your needs
+                We offer a wide range of vehicles to suit all your
+driving needs. From compact cars to moving vans and
+utes. We are your one stop local shop for all your
+rental needs.
                 </p>
               </div>
 
               <div className="plan-container__boxes__box">
                 <img src={Contact} alt="icon_img" />
-                <h3>Contact Operator</h3>
+                <h3>Call us or send us your enquiry</h3>
                 <p>
-                  Our knowledgeable and friendly operators are always ready to
-                  help with any questions or concerns
+                Our friendly staff are always ready to
+answer your enquiries and get you on
+the road. We will set you an appointment
+to come down to collect the car.
                 </p>
               </div>
 
@@ -36,8 +40,9 @@ function PlanTrip() {
                 <img src={Drive} alt="icon_img" />
                 <h3>Let's Drive</h3>
                 <p>
-                  Whether you're hitting the open road, we've got you covered
-                  with our wide range of cars
+                Pick up and drop off your car at our
+Capstone base. We offer free drop off to
+Jordanville train station (if available).
                 </p>
               </div>
             </div>
