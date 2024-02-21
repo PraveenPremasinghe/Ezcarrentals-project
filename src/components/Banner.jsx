@@ -11,9 +11,9 @@ function Banner() {
         <div className="container">
           <div className="banner-content">
             <div className="banner-content__text">
-              <h2>Save big with our cheap car rental!</h2>
+              <h2>SAVE BIG WITH OUR INDSUTRY BEATING PRICES!</h2>
               <p>
-                Top Airports. Local Suppliers. <span>24/7</span> Support.
+              ASSISTANCE ROADSIDE | SUPPORT DEDICATED | RENT TOEASY
               </p>
 
               <div className="call-now-btn-container">

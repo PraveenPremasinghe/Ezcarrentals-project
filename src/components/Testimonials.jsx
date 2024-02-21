@@ -10,12 +10,10 @@ function Testimonials() {
           <div className="testimonials-content">
             <div className="testimonials-content__title">
            
-              <h2>Reviewed by People</h2>
+              <h2>Reviewed by Real People</h2>
               <p>
-                Discover the positive impact we've made on the our clients by
-                reading through their testimonials. Our clients have experienced
-                our service and results, and they're eager to share their
-                positive experiences with you.
+              Discover the positive impact we've made on our clients by reading their testimonials. We like
+to stay a little old school and do business face-to-face. Below is what our clients think of us.
               </p>
             </div>
 

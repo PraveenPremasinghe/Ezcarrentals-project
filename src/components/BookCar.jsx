@@ -212,7 +212,7 @@ function BookCar() {
                     margin="normal"
                     value={phone}
                     onChange={handlePhone}
-                    type="number"
+                    type="text"
                     fullWidth
                     required
                     error={Boolean(phone) && !validatePhoneNumber(phone)} // Add error prop based on phone number validation
@@ -265,7 +265,7 @@ function BookCar() {
                   </label>
                   <div className="search-btn">
                     <button onClick={confirmBooking} type="submit" disabled={!formValid}>
-                      Request &nbsp; <FaArrowCircleRight />
+                      Send Request &nbsp; <FaArrowCircleRight />
                     </button>
                   </div>
                 </div>

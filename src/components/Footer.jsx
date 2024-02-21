@@ -2,6 +2,8 @@ import {
   FaEnvelopeOpenText,
   FaPhoneVolume
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Logo from "../images/logo/Ezcarrentals-logo.png";
 
 function Footer() {
   const emailAddress = "ezcarrentalsmelbourne@gmail.com";
@@ -13,9 +15,14 @@ function Footer() {
         <div className="container">
           <div className="footer-content">
             <ul className="footer-content__1">
-              <li>
-                <span>Ezcarrentals </span>
-              </li>
+            <li>
+  <div className="navbar__img">
+    <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+      <img src={Logo} alt="logo-img" style={{ width: '200px', height: 'auto', display: 'block', margin: '0 auto' }} />
+    </Link>
+  </div>
+</li>
+
               <li>
                 We offers a big range of vehicles for all your driving needs. We
                 have the perfect car to meet your needs.
@@ -37,9 +44,11 @@ function Footer() {
 
             <ul className="footer-content__2">
               <li>Working Hours</li>
-              <li>Mon - Fri: 9:00AM - 9:00PM</li>
-              <li>Sat: 9:00AM - 19:00PM</li>
-              <li>Sun: Closed</li>
+              <li>We work only on appointment basis.
+But we can be reached out</li>
+              <li>Mon - Fri: 8:00AM - 8:00PM</li>
+              <li>Sat: 8:00AM - 8:00PM</li>
+              <li>Sun: 8:00AM - 8:00PM</li>
             </ul>
 
             <ul className="footer-content__2">
