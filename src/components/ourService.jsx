@@ -22,7 +22,7 @@ const slidesContent = [
   },
   {
     title: "Car drop off and Pick up",
-    description: "We offer car drop off and pick up service depending on our availability. We could happily drop you off to the airport for some extra $ (to be negotiated)."
+    description: "We offer car drop off and pick up service depending on our availability.We could happily drown you off to the airport for the price of an Uber (if available)."
   },
   {
     title: "We are a local business",
@@ -77,12 +77,13 @@ function OurService() {
         <div className="container">
           <div className="pick-container">
             <div className="pick-container__title">
-              <h3>WE PRIDE OURSELVES IN OFFERING A UNNATCHED SERVICE WITH CRAZY LOW PRICING</h3>
               <h2>OUR SERVICES</h2>
-              <p>
+              <h3>We pride ourselves in offering an unmatched service with crazy low pricing</h3>
+
+              {/* <p>
                 Choose from a variety of our amazing vehicles to rent for your
                 next adventure or business trip
-              </p>
+              </p> */}
             </div>
 
             <Slider {...settings}>

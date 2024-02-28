@@ -38,10 +38,7 @@ function Faq() {
             <div className="faq-content__title">
               <h5>FAQ</h5>
               <h2>Frequently asked questions when renting with us</h2>
-              <p>
-                Frequently Asked Questions About the Car Rental Booking Process
-                on Our Website: Answers to Common Concerns and Inquiries.
-              </p>
+             
             </div>
 
             <div className="all-questions">
@@ -59,7 +56,7 @@ function Faq() {
                   onClick={() => openQ("q1")}
                   className={`faq-box__answer ${getClassAnswer("q1")}`}
                 >
-                 We work only on an appointment basis so, once you send us an enquiry through our website, whatsapp portal or simply call/text us, we will provide details of availability. We will only confirm your booking after a minimum payment of $50.00 is made. Payments can be made via PAYID, bank transfer, debit/credit card or cash.
+                Once you send us your enquiry, our friendly staff will get back to you with availability and choice of cars. To confirm your booking you will need to settle a <b> minimum $50 (non-refundable) </b>deposit. This guarantees your car for the day. Payments can be made via bank transfer, PAYID, credit/debit card or cash.
                 </div>
               </div>
               <div className="faq-box">

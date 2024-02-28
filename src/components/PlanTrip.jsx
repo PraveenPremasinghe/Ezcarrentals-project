@@ -41,7 +41,7 @@ to come down to collect the car.
                 <h3>Let's Drive</h3>
                 <p>
                 Pick up and drop off your car at our
-Capstone base. We offer free drop off to
+                Chadstone base. We offer free drop off to
 Jordanville train station (if available).
                 </p>
               </div>
