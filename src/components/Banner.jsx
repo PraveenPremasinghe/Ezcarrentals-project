@@ -13,7 +13,7 @@ function Banner() {
             <div className="banner-content__text">
               <h2>SAVE BIG WITH OUR INDSUTRY BEATING PRICES!</h2>
               <p>
-              ASSISTANCE ROADSIDE | SUPPORT DEDICATED | RENT TOEASY
+              Roadside Assistance | Dedicated Support | Easy to Rent
               </p>
 
               <div className="call-now-btn-container">

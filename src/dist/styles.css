@@ -542,7 +542,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  cursor: default;
+  cursor: text;
   outline: 0 !important;
   position: relative;
   -webkit-transition: all 100ms;
@@ -1074,9 +1074,10 @@ text-align: center;
 }
 
 .pick-container__title h3 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-family: "Rubik", sans-serif;
   font-weight: 400;
+  text-transform: capitalize;
 }
 
 .pick-container__title h2 {
@@ -1297,6 +1298,7 @@ text-align: center;
 .banner-content__text p {
   font-size: 2.1rem;
   color: #000;
+  text-transform: uppercase;
 }
 
 @media (max-width: 550px) {
@@ -1609,7 +1611,7 @@ text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 7rem;
+  margin-top: 2rem;
 }
 
 .faq-box {
