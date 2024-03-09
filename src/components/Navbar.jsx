@@ -67,7 +67,7 @@ function Navbar() {
           </div>
           <ul className="navbar__links">
             <li>
-              <Link className="home-link" to="/">
+              <Link className="home-link" to="/" onClick={() => window.scrollTo(0, 0)}>
                 Home
               </Link>
             </li>
