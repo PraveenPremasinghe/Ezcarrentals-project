@@ -1,14 +1,20 @@
-import { Link } from "react-router-dom";
-import BgShape from "../images/hero/hero-bg.png";
-import HeroCar from "../images/hero/main-car.png";
 import { useEffect, useState } from "react";
+import Slider from "react-slick";
+import HeroTextImage from "../images/hero/letteringt.png";
+import "../styles/main.css";
+import VehicleCard from "./VehicleCard ";
+
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Hero() {
-  const [goUp, setGoUp] = useState(false);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: (0, 0), behavior: "smooth" });
-  };
+  const storage = getStorage();
+  const firestore = getFirestore();
 
   const bookBtn = () => {
     document
@@ -16,64 +22,103 @@ function Hero() {
       .scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    const onPageScroll = () => {
-      if (window.pageYOffset > 600) {
-        setGoUp(true);
-      } else {
-        setGoUp(false);
-      }
-    };
-    window.addEventListener("scroll", onPageScroll);
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
 
-    return () => {
-      window.removeEventListener("scroll", onPageScroll);
-    };
+    responsive: [
+      {
+        breakpoint: 1024, // Adjust this breakpoint as needed
+        settings: {
+          slidesToShow: 5,
+        },
+      },
+      {
+        breakpoint: 768, // Adjust this breakpoint as needed
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480, // Adjust this breakpoint as needed
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
+  useEffect(() => {
+    fetchVehicleDetails();
   }, []);
+
+  //vehicleDetails
+  const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
+
+  const fetchVehicleDetails = async () => {
+    const vehiclesCollection = collection(firestore, "vehicles");
+    const vehiclesSnapshot = await getDocs(vehiclesCollection);
+    const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setVehicleDetailsData(vehiclesData);
+  };
+
   return (
     <>
-      <section id="home" className="hero-section">
-        <div className="container">
-          <img className="bg-shape" src={BgShape} alt="bg-shape" />
-          <div className="hero-content">
-            <div className="hero-content__text">
-              <h4>Plan your trip now</h4>
-              <h1>
-                Save <span>big</span> with our car rental
-              </h1>
-              <p>
-                Rent the car of your dreams. Unbeatable prices, unlimited miles,
-                flexible pick-up options and much more.
-              </p>
-              <div className="hero-content__text__btns">
-                <Link
-                  onClick={bookBtn}
-                  className="hero-content__text__btns__book-ride"
-                  to="/"
-                >
-                 Reserve Now &nbsp; <i className="fa-solid fa-circle-check"></i>
-                </Link>
-              
+      {/* ******************* * imeplement new code here **************************** */}
+      <section className='hero-section-bg-2'>
+        <div className='container'>
+          <div className='hero-text-2'>
+            <h1>Plan Your Journey With Us Today</h1>
+            <div>
+              <div className='category-main-2'>
+                <div className='category-2'>CARS</div>
+                <div className='category-2'>UTES</div>
+                <div className='category-2'>VANS</div>
               </div>
             </div>
+          </div>
 
-            {/* img */}
-            <img
-              src={HeroCar}
-              alt="car-img"
-              className="hero-content__car-img"
-            />
+          <div className='reserve-now-2'>
+            <button onClick={bookBtn} className='reserve-now-btn'>
+              <span> Request Quote </span>
+            </button>
           </div>
         </div>
 
-        {/* page up */}
-        <div
-          onClick={scrollToTop}
-          className={`scroll-up ${goUp ? "show-scroll" : ""}`}
-        >
-          <i className="fa-solid fa-angle-up"></i>
+        <div className='VehicleCard-slider-2'>
+          <Slider
+            sx={{
+              width: "100%",
+              m: 10,
+              display: "flex",
+              justifyContent: "center",
+            }}
+            {...settings}
+          >
+            {vehicleDetailsData.map((vehicle, index) => (
+              <div key={index}>
+                <VehicleCard
+                  imageUrl={vehicle.imageUrl}
+                  vehicleName={vehicle.vehicleName}
+                  category={vehicle.category}
+                  doors={vehicle.doors}
+                  seats={vehicle.seats}
+                  transmission={vehicle.transmission}
+                  perDayPrice={vehicle.perDayPrice}
+                />
+              </div>
+            ))}
+          </Slider>
         </div>
       </section>
+
+      {/* ******************* * imeplement new code here **************************** */}
     </>
   );
 }

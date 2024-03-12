@@ -1,148 +1,115 @@
+import emailjs from "@emailjs/browser";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import TextField from "@mui/material/TextField";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { useEffect, useState } from "react";
-import CarAudi from "../images/cars-big/audia1.jpg";
-import CarGolf from "../images/cars-big/golf6.jpg";
-import CarToyota from "../images/cars-big/toyotacamry.jpg";
-import CarBmw from "../images/cars-big/bmw320.jpg";
-import CarMercedes from "../images/cars-big/benz.jpg";
-import CarPassat from "../images/cars-big/passatcc.jpg";
+import { FaArrowCircleRight } from "react-icons/fa";
+import Select from "react-select";
 
 function BookCar() {
+  const storage = getStorage();
+  const firestore = getFirestore();
+
   const [modal, setModal] = useState(false); //  class - active-modal
 
   // booking car
   const [carType, setCarType] = useState("");
-  const [pickUp, setPickUp] = useState("");
-  const [dropOff, setDropOff] = useState("");
-  const [pickTime, setPickTime] = useState("");
-  const [dropTime, setDropTime] = useState("");
+  const [carName, setCarName] = useState("");
+
   const [carImg, setCarImg] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // modal infos
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+
   const [phone, setPhone] = useState("");
-  const [age, setAge] = useState("");
+
   const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [zipcode, setZipCode] = useState("");
+
+  //vehicleDetails
+  const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    setFormValid(validateForm());
+  }, [carType, name, phone, email, message]);
 
   // taking value of modal inputs
   const handleName = (e) => {
     setName(e.target.value);
   };
 
-  const handleLastName = (e) => {
-    setLastName(e.target.value);
-  };
-
   const handlePhone = (e) => {
     setPhone(e.target.value);
-  };
-
-  const handleAge = (e) => {
-    setAge(e.target.value);
   };
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleAddress = (e) => {
-    setAddress(e.target.value);
+  const handleMessage = (e) => {
+    setMessage(e.target.value);
   };
 
-  const handleCity = (e) => {
-    setCity(e.target.value);
-  };
-
-  const handleZip = (e) => {
-    setZipCode(e.target.value);
-  };
-
-  // open modal when all inputs are fulfilled
-  const openModal = (e) => {
-    e.preventDefault();
-    const errorMsg = document.querySelector(".error-message");
-    if (
-      pickUp === "" ||
-      dropOff === "" ||
-      pickTime === "" ||
-      dropTime === "" ||
-      carType === ""
-    ) {
-      errorMsg.style.display = "flex";
-    } else {
-      setModal(!modal);
-      const modalDiv = document.querySelector(".booking-modal");
-      modalDiv.scroll(0, 0);
-      errorMsg.style.display = "none";
-    }
-  };
-
-  // disable page scroll when modal is displayed
   useEffect(() => {
-    if (modal === true) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [modal]);
+    fetchVehicleDetails();
+  }, []);
 
   // confirm modal booking
   const confirmBooking = (e) => {
     e.preventDefault();
-    setModal(!modal);
-    const doneMsg = document.querySelector(".booking-done");
-    doneMsg.style.display = "flex";
+
+    // Check if any field is empty
+    if (!carType || !name || !phone || !email || !message) {
+      setError(true); // Set error state to true
+      return; // Exit the function early
+    }
+
+    const payload = {
+      carType: carType.label,
+      name: name,
+      phone: phone,
+      email: email,
+      message: message,
+    };
+
+    emailjs
+      .send(
+        process.env.REACT_APP_EMAIL_SERVICE_ID,
+        process.env.REACT_APP_EMAIL_TEMPLATE_ID,
+        payload,
+        process.env.REACT_APP_EMAIL_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          const doneMsg = document.querySelector(".booking-done");
+          doneMsg.style.display = "flex";
+        },
+        (error) => {}
+      );
   };
 
   // taking value of booking inputs
   const handleCar = (e) => {
-    setCarType(e.target.value);
-    setCarImg(e.target.value);
+    setCarType(e);
+    const selectedDate = vehicleDetailsData.find((data) => data.id === e.value);
+    setCarImg(selectedDate.imageUrl);
+    setCarName(selectedDate.vehicleName);
   };
 
-  const handlePick = (e) => {
-    setPickUp(e.target.value);
+  const fetchVehicleDetails = async () => {
+    const vehiclesCollection = collection(firestore, "vehicles");
+    const vehiclesSnapshot = await getDocs(vehiclesCollection);
+    const vehiclesData = vehiclesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setVehicleDetailsData(vehiclesData);
   };
-
-  const handleDrop = (e) => {
-    setDropOff(e.target.value);
-  };
-
-  const handlePickTime = (e) => {
-    setPickTime(e.target.value);
-  };
-
-  const handleDropTime = (e) => {
-    setDropTime(e.target.value);
-  };
-
-  // based on value name show car img
-  let imgUrl;
-  switch (carImg) {
-    case "Audi A1 S-Line":
-      imgUrl = CarAudi;
-      break;
-    case "VW Golf 6":
-      imgUrl = CarGolf;
-      break;
-    case "Toyota Camry":
-      imgUrl = CarToyota;
-      break;
-    case "BMW 320 ModernLine":
-      imgUrl = CarBmw;
-      break;
-    case "Mercedes-Benz GLK":
-      imgUrl = CarMercedes;
-      break;
-    case "VW Passat CC":
-      imgUrl = CarPassat;
-      break;
-    default:
-      imgUrl = "";
-  }
 
   // hide message
   const hideMessage = () => {
@@ -150,317 +117,167 @@ function BookCar() {
     doneMsg.style.display = "none";
   };
 
+  const CarList = vehicleDetailsData.map((data) => ({
+    value: data.id,
+    label: data.vehicleName,
+  }));
+
+  const validateForm = () => {
+    return carType && name && phone && email && message;
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    // Use a regular expression to check if the phone number is in a valid format
+    const regex = /^\d{10}$/; // Assuming a 10-digit phone number format
+    return regex.test(phoneNumber);
+  };
+
   return (
     <>
-      <section id="booking-section" className="book-section">
-        {/* overlay */}
-        <div
-          onClick={openModal}
-          className={`modal-overlay ${modal ? "active-modal" : ""}`}
-        ></div>
+      <section id='booking-section' className='book-section'>
+        <div className='book-content'>
+          <div className='book-content__box '>
+            <div className='book-content-bg'>
+              <h2 className='book-car-title'>
+                {" "}
+                <span>Request a Quote</span>{" "}
+              </h2>
 
-       
-          <div className="book-content">
-            <div className="book-content__box ">
-            
-              <h2>BOOK A CAR TODAY!</h2>
+              {error && ( // Show error message if there's an error
+                <p className='error-message'>
+                  <Alert severity='error'>
+                    <AlertTitle>
+                      Please fill all fields — <strong>check it out!</strong>
+                    </AlertTitle>
+                  </Alert>
+                </p>
+              )}
 
-              <p className="error-message">
-                All fields required! <i className="fa-solid fa-xmark"></i>
+              <p className='booking-done'>
+                Thank You for Requesting us!
+                <i onClick={hideMessage} className='fa-solid fa-xmark'></i>
               </p>
 
-              <p className="booking-done">
-                Check your email to confirm an order.{" "}
-                <i onClick={hideMessage} className="fa-solid fa-xmark"></i>
-              </p>
-
-              <form className="box-form">
-                <div className="box-form__car-type">
+              <form className='box-form'>
+                <div className='box-form__car-type'>
                   <label>
-                    <i className="fa-solid fa-car"></i> &nbsp; Select Your Car
-                    Type <b>*</b>
+                    <i className='fa-solid fa-car'></i> &nbsp; Select Your Car
                   </label>
-                  <select value={carType} onChange={handleCar}>
-                    <option>Select your car type</option>
-                    <option value="Audi A1 S-Line">Audi A1 S-Line</option>
-                    <option value="VW Golf 6">VW Golf 6</option>
-                    <option value="Toyota Camry">Toyota Camry</option>
-                    <option value="BMW 320 ModernLine">
-                      BMW 320 ModernLine
-                    </option>
-                    <option value="Mercedes-Benz GLK">Mercedes-Benz GLK</option>
-                    <option value="VW Passat CC">VW Passat CC</option>
-                  </select>
+
+                  <Select
+                    value={carType}
+                    onChange={handleCar}
+                    options={CarList}
+                    placeholder='Select your car type'
+                    isSearchable={false}
+                  />
                 </div>
 
-                <div className="box-form__car-type">
+                <div className='box-form__car-time'>
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Pick-up{" "}
-                    <b>*</b>
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;Full
+                    Name
                   </label>
-                  <select value={pickUp} onChange={handlePick}>
-                    <option>Select pick up location</option>
-                    <option>Belgrade</option>
-                    <option>Novi Sad</option>
-                    <option>Nis</option>
-                    <option>Kragujevac</option>
-                    <option>Subotica</option>
-                  </select>
+                  <TextField
+                    placeholder='Enter your name'
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    required
+                    value={name}
+                    onChange={handleName}
+                    sx={{ m: 0, cursor: "auto" }}
+                  />
                 </div>
 
-                <div className="box-form__car-type">
+                <div className='box-form__car-time'>
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Drop-of{" "}
-                    <b>*</b>
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;Phone
                   </label>
-                  <select value={dropOff} onChange={handleDrop}>
-                    <option>Select drop off location</option>
-                    <option>Novi Sad</option>
-                    <option>Belgrade</option>
-                    <option>Nis</option>
-                    <option>Kragujevac</option>
-                    <option>Subotica</option>
-                  </select>
+                  <TextField
+                    placeholder='Phone Number'
+                    variant='outlined'
+                    margin='normal'
+                    value={phone}
+                    onChange={handlePhone}
+                    type='text'
+                    fullWidth
+                    required
+                    error={Boolean(phone) && !validatePhoneNumber(phone)} // Add error prop based on phone number validation
+                    helperText={
+                      Boolean(phone) && !validatePhoneNumber(phone)
+                        ? "Invalid phone number"
+                        : ""
+                    }
+                    sx={{ m: 0 }}
+                  />
                 </div>
 
-                <div className="box-form__car-time">
-                  <label htmlFor="picktime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
-                    Pick-up <b>*</b>
+                <div className='box-form__car-time'>
+                  <label>
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;Email
                   </label>
-                  <input
-                    id="picktime"
-                    value={pickTime}
-                    onChange={handlePickTime}
-                    type="date"
-                  ></input>
+                  <TextField
+                    placeholder='Email'
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    required
+                    value={email}
+                    onChange={handleEmail}
+                    type='email'
+                    error={Boolean(email) && !validateEmail(email)}
+                    helperText={
+                      Boolean(email) && !validateEmail(email)
+                        ? "Invalid email"
+                        : ""
+                    }
+                    sx={{ m: 0 }}
+                  />
                 </div>
 
-                <div className="box-form__car-time">
-                  <label htmlFor="droptime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
-                    Drop-of <b>*</b>
+                <div className='box-form__car-time'>
+                  <label>
+                    <i className='fa-regular fa-calendar-days '></i>{" "}
+                    &nbsp;Message
                   </label>
-                  <input
-                    id="droptime"
-                    value={dropTime}
-                    onChange={handleDropTime}
-                    type="date"
-                  ></input>
+                  <TextField
+                    placeholder='Message'
+                    variant='outlined'
+                    margin='normal'
+                    onChange={handleMessage}
+                    fullWidth
+                    required
+                    multiline // Enable multiline
+                    rows={3}
+                    sx={{ m: 0, backgroundColor: "#fff", borderRadius: "5px" }}
+                  />
                 </div>
 
-                <button onClick={openModal} type="submit">
-                  Search
-                </button>
+                <div className='box-form__car-time'>
+                  <label htmlFor='droptime'>
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;
+                  </label>
+                  <div className='search-btn'>
+                    <button
+                      onClick={confirmBooking}
+                      type='submit'
+                      disabled={!formValid}
+                    >
+                      Send Request &nbsp; <FaArrowCircleRight />
+                    </button>
+                  </div>
+                </div>
               </form>
-
-</div>
-             
+            </div>
           </div>
-        
+        </div>
       </section>
-
-      {/* modal ------------------------------------ */}
-
-      <div className={`booking-modal ${modal ? "active-modal" : ""}`}>
-        {/* title */}
-        <div className="booking-modal__title">
-          <h2>Complete Reservation</h2>
-          <i onClick={openModal} className="fa-solid fa-xmark"></i>
-        </div>
-        {/* message */}
-        <div className="booking-modal__message">
-          <h4>
-            <i className="fa-solid fa-circle-info"></i> Upon completing this
-            reservation enquiry, you will receive:
-          </h4>
-          <p>
-            Your rental voucher to produce on arrival at the rental desk and a
-            toll-free customer support number.
-          </p>
-        </div>
-        {/* car info */}
-        <div className="booking-modal__car-info">
-          <div className="dates-div">
-            <div className="booking-modal__car-info__dates">
-              <h5>Location & Date</h5>
-              <span>
-                <i className="fa-solid fa-location-dot"></i>
-                <div>
-                  <h6>Pick-Up Date & Time</h6>
-                  <p>
-                    {pickTime} /{" "}
-                    <input type="time" className="input-time"></input>
-                  </p>
-                </div>
-              </span>
-            </div>
-
-            <div className="booking-modal__car-info__dates">
-              <span>
-                <i className="fa-solid fa-location-dot"></i>
-                <div>
-                  <h6>Drop-Off Date & Time</h6>
-                  <p>
-                    {dropTime} /{" "}
-                    <input type="time" className="input-time"></input>
-                  </p>
-                </div>
-              </span>
-            </div>
-
-            <div className="booking-modal__car-info__dates">
-              <span>
-                <i className="fa-solid fa-calendar-days"></i>
-                <div>
-                  <h6>Pick-Up Location</h6>
-                  <p>{pickUp}</p>
-                </div>
-              </span>
-            </div>
-
-            <div className="booking-modal__car-info__dates">
-              <span>
-                <i className="fa-solid fa-calendar-days"></i>
-                <div>
-                  <h6>Drop-Off Location</h6>
-                  <p>{dropOff}</p>
-                </div>
-              </span>
-            </div>
-          </div>
-          <div className="booking-modal__car-info__model">
-            <h5>
-              <span>Car -</span> {carType}
-            </h5>
-            {imgUrl && <img src={imgUrl} alt="car_img" />}
-          </div>
-        </div>
-        {/* personal info */}
-        <div className="booking-modal__person-info">
-          <h4>Personal Information</h4>
-          <form className="info-form">
-            <div className="info-form__2col">
-              <span>
-                <label>
-                  First Name <b>*</b>
-                </label>
-                <input
-                  value={name}
-                  onChange={handleName}
-                  type="text"
-                  placeholder="Enter your first name"
-                ></input>
-                <p className="error-modal">This field is required.</p>
-              </span>
-
-              <span>
-                <label>
-                  Last Name <b>*</b>
-                </label>
-                <input
-                  value={lastName}
-                  onChange={handleLastName}
-                  type="text"
-                  placeholder="Enter your last name"
-                ></input>
-                <p className="error-modal ">This field is required.</p>
-              </span>
-
-              <span>
-                <label>
-                  Phone Number <b>*</b>
-                </label>
-                <input
-                  value={phone}
-                  onChange={handlePhone}
-                  type="tel"
-                  placeholder="Enter your phone number"
-                ></input>
-                <p className="error-modal">This field is required.</p>
-              </span>
-
-              <span>
-                <label>
-                  Age <b>*</b>
-                </label>
-                <input
-                  value={age}
-                  onChange={handleAge}
-                  type="number"
-                  placeholder="18"
-                ></input>
-                <p className="error-modal ">This field is required.</p>
-              </span>
-            </div>
-
-            <div className="info-form__1col">
-              <span>
-                <label>
-                  Email <b>*</b>
-                </label>
-                <input
-                  value={email}
-                  onChange={handleEmail}
-                  type="email"
-                  placeholder="Enter your email address"
-                ></input>
-                <p className="error-modal">This field is required.</p>
-              </span>
-
-              <span>
-                <label>
-                  Address <b>*</b>
-                </label>
-                <input
-                  value={address}
-                  onChange={handleAddress}
-                  type="text"
-                  placeholder="Enter your street address"
-                ></input>
-                <p className="error-modal ">This field is required.</p>
-              </span>
-            </div>
-
-            <div className="info-form__2col">
-              <span>
-                <label>
-                  City <b>*</b>
-                </label>
-                <input
-                  value={city}
-                  onChange={handleCity}
-                  type="text"
-                  placeholder="Enter your city"
-                ></input>
-                <p className="error-modal">This field is required.</p>
-              </span>
-
-              <span>
-                <label>
-                  Zip Code <b>*</b>
-                </label>
-                <input
-                  value={zipcode}
-                  onChange={handleZip}
-                  type="text"
-                  placeholder="Enter your zip code"
-                ></input>
-                <p className="error-modal ">This field is required.</p>
-              </span>
-            </div>
-
-            <span className="info-form__checkbox">
-              <input type="checkbox"></input>
-              <p>Please send me latest news and updates</p>
-            </span>
-
-            <div className="reserve-button">
-              <button onClick={confirmBooking}>Reserve Now</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </>
   );
 }
