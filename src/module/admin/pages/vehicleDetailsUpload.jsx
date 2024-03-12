@@ -24,7 +24,7 @@ import {
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { CircularProgress } from '@mui/material';
+import { CircularProgress } from "@mui/material";
 
 const VehicleForm = () => {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const VehicleForm = () => {
   const [progress, setProgress] = useState(0);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertSeverity, setAlertSeverity] = useState('info');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("info");
   const [loading, setLoading] = useState(false);
 
   const onDrop = (acceptedFiles) => {
@@ -57,8 +57,6 @@ const VehicleForm = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-   
-
       if (user === null) {
         // const uid = user.uid;
         navigate("/admin-login");
@@ -67,14 +65,13 @@ const VehicleForm = () => {
   }, []);
 
   const handleSubmit = (e) => {
-   
     e.preventDefault();
     if (uploadedImage) {
       const StorageRef = storageRef(storage, `images/${uploadedImage.name}`);
       const uploadTask = uploadBytesResumable(StorageRef, uploadedImage);
 
       // Set loading to true when upload starts
-    setLoading(true);
+      setLoading(true);
 
       uploadTask.on(
         "state_changed",
@@ -109,21 +106,19 @@ const VehicleForm = () => {
             setDoors("");
             setUploadedImage(null);
             // Show success alert
-          setAlertMessage("Vehicle added successfully");
-          setAlertSeverity("success");
-          setShowAlert(true);
+            setAlertMessage("Vehicle added successfully");
+            setAlertSeverity("success");
+            setShowAlert(true);
           } catch (error) {
-            
             console.error("Error adding document: ", error);
-          // Show error alert
-          setAlertMessage("Error adding document");
-          setAlertSeverity("error");
-          setShowAlert(true);
-          
-        } finally {
-          // Hide loading indicator when upload is completed
-          setLoading(false);
-        }
+            // Show error alert
+            setAlertMessage("Error adding document");
+            setAlertSeverity("error");
+            setShowAlert(true);
+          } finally {
+            // Hide loading indicator when upload is completed
+            setLoading(false);
+          }
         }
       );
     }
@@ -142,77 +137,82 @@ const VehicleForm = () => {
       <Container>
         <Card sx={{ p: 3, borderRadius: "14px" }}>
           <Box sx={{ float: "right", mb: 3 }}>
-            <Link to="/admin-table">
-              <Button variant="contained">Vehicle Details Table</Button>
+            <Link to='/admin-table'>
+              <Button variant='contained'>Vehicle Details Table</Button>
             </Link>
           </Box>
 
+          <Stack
+            spacing={2}
+            style={{ position: "fixed", top: 16, right: 16, zIndex: 9999 }}
+          >
+            {showAlert && (
+              <Alert
+                severity={alertSeverity}
+                onClose={() => setShowAlert(false)}
+              >
+                {alertMessage}
+              </Alert>
+            )}
+          </Stack>
 
-          <Stack spacing={2} style={{ position: 'fixed', top: 16, right: 16, zIndex: 9999 }}>
-  {showAlert && (
-    <Alert severity={alertSeverity} onClose={() => setShowAlert(false)}>
-      {alertMessage}
-    </Alert>
-  )}
-</Stack>
-
-          <Typography variant="h5" align="center" gutterBottom>
+          <Typography variant='h5' align='center' gutterBottom>
             Vehicle Information Form
           </Typography>
 
-          <Box component="form" onSubmit={handleSubmit}>
+          <Box component='form' onSubmit={handleSubmit}>
             <TextField
-              label="Vehicle Name"
+              label='Vehicle Name'
               fullWidth
-              margin="normal"
+              margin='normal'
               value={vehicleName}
               onChange={(e) => setVehicleName(e.target.value)}
               sx={{ "& label": { fontSize: "0.8rem" } }}
             />
 
             <TextField
-              label="Per Day Price"
+              label='Per Day Price'
               fullWidth
-              margin="normal"
-              type="number"
+              margin='normal'
+              type='number'
               value={perDayPrice}
               onChange={(e) => setPerDayPrice(e.target.value)}
               sx={{ "& label": { fontSize: "0.8rem" } }}
             />
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin='normal'>
               <InputLabel sx={{ fontSize: "0.8rem" }}>Category</InputLabel>
               <Select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 sx={{ "& label": { fontSize: "0.8rem" } }}
               >
-                <MenuItem value="ECONOMY">Economy</MenuItem>
-                <MenuItem value="COMFORT">Comfort</MenuItem>
-                <MenuItem value="PREMIUM">Premium</MenuItem>
+                <MenuItem value='ECONOMY'>Economy</MenuItem>
+                <MenuItem value='COMFORT'>Comfort</MenuItem>
+                <MenuItem value='PREMIUM'>Premium</MenuItem>
               </Select>
             </FormControl>
 
             <TextField
-              label="Title (Vehicle Inner Details)"
+              label='Title (Vehicle Inner Details)'
               fullWidth
-              margin="normal"
+              margin='normal'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               sx={{ "& label": { fontSize: "0.8rem" } }}
             />
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin='normal'>
               <InputLabel sx={{ fontSize: "0.8rem" }}>Doors</InputLabel>
               <Select
                 value={doors}
                 onChange={(e) => setDoors(e.target.value)}
-                label="Doors"
+                label='Doors'
               >
-                <MenuItem value="2">2</MenuItem>
-                <MenuItem value="4">4</MenuItem>
-                <MenuItem value="5">5</MenuItem>
-                <MenuItem value="6">6</MenuItem>
+                <MenuItem value='2'>2</MenuItem>
+                <MenuItem value='4'>4</MenuItem>
+                <MenuItem value='5'>5</MenuItem>
+                <MenuItem value='6'>6</MenuItem>
               </Select>
             </FormControl>
 
@@ -230,28 +230,28 @@ const VehicleForm = () => {
               {uploadedImage && (
                 <img
                   src={URL.createObjectURL(uploadedImage)}
-                  alt="Uploaded"
+                  alt='Uploaded'
                   style={{ width: "100%" }}
                 />
               )}
             </div>
 
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant='contained' color='primary' type='submit'>
               Submit
             </Button>
           </Box>
 
           {loading && (
-        <Box
-          position="fixed"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-          zIndex={9999}
-        >
-          <CircularProgress />
-        </Box>
-      )}
+            <Box
+              position='fixed'
+              top='50%'
+              left='50%'
+              transform='translate(-50%, -50%)'
+              zIndex={9999}
+            >
+              <CircularProgress />
+            </Box>
+          )}
         </Card>
       </Container>
     </Box>

@@ -39,8 +39,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { CircularProgress } from '@mui/material';
- 
+import { CircularProgress } from "@mui/material";
 
 const AdminTable = ({ data, onEdit }) => {
   const navigate = useNavigate();
@@ -74,12 +73,12 @@ const AdminTable = ({ data, onEdit }) => {
     try {
       setLoading(true);
       await deleteDoc(doc(firestore, "vehicles", id));
-  
+
       const imageRef = storageRef(storage, imageUrl);
       await deleteObject(imageRef);
-  
+
       fetchVehicleDetails();
-  
+
       // Show success alert
       setAlertMessage("Vehicle deleted successfully");
       setAlertSeverity("success");
@@ -90,40 +89,34 @@ const AdminTable = ({ data, onEdit }) => {
       setAlertMessage("Error deleting Vehicle");
       setAlertSeverity("error");
       setShowAlert(true);
-    }
-    finally {
+    } finally {
       // Hide loading spinner when deletion process is completed
       setLoading(false);
     }
   };
 
-
   const [editingItem, setEditingItem] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertSeverity, setAlertSeverity] = useState('info');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("info");
   const [loading, setLoading] = useState(false);
 
   const [editedData, setEditedData] = useState({
-    vehicleName: '',
-    perDayPrice: '',
-    category: '',
-    title: '',
-    doors: '',
-    imageUrl: ''
+    vehicleName: "",
+    perDayPrice: "",
+    category: "",
+    title: "",
+    doors: "",
+    imageUrl: "",
   });
-
-
 
   const handleEdit = (item) => {
     setEditingItem(item);
     setEditedData(item); // Pre-fill the form fields with existing data
     setOpenModal(true);
   };
-
- 
 
   const handleSave = async () => {
     try {
@@ -133,7 +126,7 @@ const AdminTable = ({ data, onEdit }) => {
       setOpenModal(false);
       // Optionally, you may want to fetch the updated data again to reflect changes in the UI
       fetchVehicleDetails();
-  
+
       // Show success alert
       setAlertMessage("vehicle details updated successfully");
       setAlertSeverity("success");
@@ -144,13 +137,11 @@ const AdminTable = ({ data, onEdit }) => {
       setAlertMessage("Error updating document");
       setAlertSeverity("error");
       setShowAlert(true);
-    }
-    finally {
+    } finally {
       // Hide loading spinner when deletion process is completed
       setLoading(false);
     }
   };
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -167,33 +158,30 @@ const AdminTable = ({ data, onEdit }) => {
         <Link to='/upload-details'>
           <Button variant='contained'>Add new Vehicle</Button>
         </Link>
-        
       </Box>
 
+      <Stack
+        spacing={2}
+        style={{ position: "fixed", top: 16, right: 16, zIndex: 9999 }}
+      >
+        {showAlert && (
+          <Alert severity={alertSeverity} onClose={() => setShowAlert(false)}>
+            {alertMessage}
+          </Alert>
+        )}
+      </Stack>
 
-
-
-<Stack spacing={2} style={{ position: 'fixed', top: 16, right: 16, zIndex: 9999 }}>
-{showAlert && (
-  <Alert severity={alertSeverity} onClose={() => setShowAlert(false)}>
-    {alertMessage}
-  </Alert>
-)}
-</Stack>
-
-
-{loading && (
+      {loading && (
         <Box
-          position="fixed"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
+          position='fixed'
+          top='50%'
+          left='50%'
+          transform='translate(-50%, -50%)'
           zIndex={9999}
         >
           <CircularProgress />
         </Box>
       )}
-
 
       <TableContainer component={Paper}>
         <Table>
@@ -224,7 +212,10 @@ const AdminTable = ({ data, onEdit }) => {
                   />
                 </TableCell>
                 <TableCell>
-                <IconButton onClick={() => handleEdit(item)} aria-label='edit'>
+                  <IconButton
+                    onClick={() => handleEdit(item)}
+                    aria-label='edit'
+                  >
                     <AiFillEdit />
                   </IconButton>
 
@@ -243,19 +234,21 @@ const AdminTable = ({ data, onEdit }) => {
       </TableContainer>
 
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
-      <div style={{ 
-    position: 'absolute', 
-    width: "50%",
-    top: '50%', 
-    left: '50%', 
-    transform: 'translate(-50%, -50%)', 
-    backgroundColor: 'white', 
-    padding: '20px', 
-    borderRadius: '8px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px'  
-  }}>
+        <div
+          style={{
+            position: "absolute",
+            width: "50%",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            padding: "20px",
+            borderRadius: "8px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+          }}
+        >
           <TextField
             label='Vehicle Name'
             name='vehicleName'
@@ -291,7 +284,12 @@ const AdminTable = ({ data, onEdit }) => {
             onChange={handleInputChange}
             fullWidth
           />
-          <Button variant='contained' color='primary' onClick={handleSave} style={{ marginTop: '20px' }}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleSave}
+            style={{ marginTop: "20px" }}
+          >
             Save
           </Button>
         </div>

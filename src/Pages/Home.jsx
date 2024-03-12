@@ -7,27 +7,23 @@ import Navbar from "../components/Navbar";
 
 import Testimonials from "../components/Testimonials";
 import Faq from "../components/Faq";
-import React, { useState, useEffect } from 'react';
-import { FaArrowUp } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import { FaArrowUp } from "react-icons/fa";
 import Footer from "../components/Footer";
 
 function Home() {
-
   const [isVisible, setIsVisible] = useState(false);
-
 
   const handleWhatsAppCall = () => {
     const phoneNumber = "0400920512";
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, "_blank");
   };
-
-
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -40,14 +36,13 @@ function Home() {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility);
 
     return () => {
-      window.removeEventListener('scroll', toggleVisibility);
+      window.removeEventListener("scroll", toggleVisibility);
     };
   }, []);
 
-  
   return (
     <>
       <Navbar />
@@ -56,34 +51,29 @@ function Home() {
       <BookCar />
       <PlanTrip />
       <OurService />
-     
-   
+
       <Testimonials />
       <Faq />
- 
+
       <Footer />
 
+      <div className='wh-api-bg'>
+        <div onClick={handleWhatsAppCall}>
+          <div className='wh-api'>
+            <div className='wh-fixed whatsapp-pulse'>
+              <button className='wh-ap-btn'></button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <div className="wh-api-bg">
-      <div onClick={handleWhatsAppCall}>
-      <div className="wh-api">
-	<div className="wh-fixed whatsapp-pulse">
-			<button className="wh-ap-btn"></button> 
-	</div>
-</div>
- </div>  
-    </div>
-
-
-
-    <div className="scroll-up-button">
-      {isVisible && (
-        <button onClick={scrollToTop}>
-          <FaArrowUp />
-        </button>
-      )}
-    </div>
-    
+      <div className='scroll-up-button'>
+        {isVisible && (
+          <button onClick={scrollToTop}>
+            <FaArrowUp />
+          </button>
+        )}
+      </div>
     </>
   );
 }

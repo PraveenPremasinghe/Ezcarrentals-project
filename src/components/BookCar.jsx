@@ -34,8 +34,6 @@ function BookCar() {
   const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
   const [formValid, setFormValid] = useState(false);
 
-  
-
   useEffect(() => {
     setFormValid(validateForm());
   }, [carType, name, phone, email, message]);
@@ -65,11 +63,11 @@ function BookCar() {
   const confirmBooking = (e) => {
     e.preventDefault();
 
-     // Check if any field is empty
-  if (!carType || !name || !phone || !email || !message) {
-    setError(true); // Set error state to true
-    return; // Exit the function early
-  }
+    // Check if any field is empty
+    if (!carType || !name || !phone || !email || !message) {
+      setError(true); // Set error state to true
+      return; // Exit the function early
+    }
 
     const payload = {
       carType: carType.label,
@@ -91,15 +89,12 @@ function BookCar() {
           const doneMsg = document.querySelector(".booking-done");
           doneMsg.style.display = "flex";
         },
-        (error) => {
-        
-        }
+        (error) => {}
       );
   };
 
   // taking value of booking inputs
   const handleCar = (e) => {
- 
     setCarType(e);
     const selectedDate = vehicleDetailsData.find((data) => data.id === e.value);
     setCarImg(selectedDate.imageUrl);
@@ -114,7 +109,6 @@ function BookCar() {
       ...doc.data(),
     }));
     setVehicleDetailsData(vehiclesData);
- 
   };
 
   // hide message
@@ -145,126 +139,136 @@ function BookCar() {
 
   return (
     <>
-      <section id="booking-section" className="book-section">
-        <div className="book-content">
-          <div className="book-content__box ">
-            <div className="book-content-bg">
-              <h2 className="book-car-title">
+      <section id='booking-section' className='book-section'>
+        <div className='book-content'>
+          <div className='book-content__box '>
+            <div className='book-content-bg'>
+              <h2 className='book-car-title'>
                 {" "}
                 <span>Request a Quote</span>{" "}
               </h2>
 
               {error && ( // Show error message if there's an error
-              <p className="error-message">
-                <Alert severity="error">
-                  <AlertTitle>
-                    Please fill all fields — <strong>check it out!</strong>
-                  </AlertTitle>
-                </Alert>
-              </p>
-            )}
+                <p className='error-message'>
+                  <Alert severity='error'>
+                    <AlertTitle>
+                      Please fill all fields — <strong>check it out!</strong>
+                    </AlertTitle>
+                  </Alert>
+                </p>
+              )}
 
-              <p className="booking-done">
-                Thank You for Requesting  us!
-                <i onClick={hideMessage} className="fa-solid fa-xmark"></i>
+              <p className='booking-done'>
+                Thank You for Requesting us!
+                <i onClick={hideMessage} className='fa-solid fa-xmark'></i>
               </p>
 
-              <form className="box-form">
-                <div className="box-form__car-type">
+              <form className='box-form'>
+                <div className='box-form__car-type'>
                   <label>
-                    <i className="fa-solid fa-car"></i> &nbsp; Select Your Car
+                    <i className='fa-solid fa-car'></i> &nbsp; Select Your Car
                   </label>
 
                   <Select
                     value={carType}
                     onChange={handleCar}
                     options={CarList}
-                    placeholder="Select your car type"
+                    placeholder='Select your car type'
                     isSearchable={false}
-                    
                   />
                 </div>
 
-                <div className="box-form__car-time">
+                <div className='box-form__car-time'>
                   <label>
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Full
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;Full
                     Name
                   </label>
                   <TextField
-                    placeholder="Enter your name"
-                    variant="outlined"
-                    margin="normal"
+                    placeholder='Enter your name'
+                    variant='outlined'
+                    margin='normal'
                     fullWidth
                     required
                     value={name}
                     onChange={handleName}
-                    sx={{ m: 0 , cursor:'auto'}}
+                    sx={{ m: 0, cursor: "auto" }}
                   />
                 </div>
 
-                <div className="box-form__car-time">
+                <div className='box-form__car-time'>
                   <label>
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Phone
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;Phone
                   </label>
                   <TextField
-                    placeholder="Phone Number"
-                    variant="outlined"
-                    margin="normal"
+                    placeholder='Phone Number'
+                    variant='outlined'
+                    margin='normal'
                     value={phone}
                     onChange={handlePhone}
-                    type="text"
+                    type='text'
                     fullWidth
                     required
                     error={Boolean(phone) && !validatePhoneNumber(phone)} // Add error prop based on phone number validation
-                    helperText={Boolean(phone) && !validatePhoneNumber(phone) ? 'Invalid phone number' : ''} 
+                    helperText={
+                      Boolean(phone) && !validatePhoneNumber(phone)
+                        ? "Invalid phone number"
+                        : ""
+                    }
                     sx={{ m: 0 }}
                   />
                 </div>
 
-                <div className="box-form__car-time">
+                <div className='box-form__car-time'>
                   <label>
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;Email
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;Email
                   </label>
                   <TextField
-                    placeholder="Email"
-                    variant="outlined"
-                    margin="normal"
+                    placeholder='Email'
+                    variant='outlined'
+                    margin='normal'
                     fullWidth
                     required
                     value={email}
                     onChange={handleEmail}
-                    type="email"
-                    error={Boolean(email) && !validateEmail(email)}  
-                    helperText={Boolean(email) && !validateEmail(email) ? 'Invalid email' : ''}
+                    type='email'
+                    error={Boolean(email) && !validateEmail(email)}
+                    helperText={
+                      Boolean(email) && !validateEmail(email)
+                        ? "Invalid email"
+                        : ""
+                    }
                     sx={{ m: 0 }}
                   />
                 </div>
 
-                <div className="box-form__car-time">
+                <div className='box-form__car-time'>
                   <label>
-                    <i className="fa-regular fa-calendar-days "></i>{" "}
+                    <i className='fa-regular fa-calendar-days '></i>{" "}
                     &nbsp;Message
                   </label>
                   <TextField
-                    placeholder="Message"
-                    variant="outlined"
-                    margin="normal"
+                    placeholder='Message'
+                    variant='outlined'
+                    margin='normal'
                     onChange={handleMessage}
-                    
                     fullWidth
                     required
                     multiline // Enable multiline
-  rows={3} 
-                    sx={{ m: 0,backgroundColor:'#fff' ,borderRadius:'5px'}}
+                    rows={3}
+                    sx={{ m: 0, backgroundColor: "#fff", borderRadius: "5px" }}
                   />
                 </div>
 
-                <div className="box-form__car-time">
-                  <label htmlFor="droptime">
-                    <i className="fa-regular fa-calendar-days "></i> &nbsp;
+                <div className='box-form__car-time'>
+                  <label htmlFor='droptime'>
+                    <i className='fa-regular fa-calendar-days '></i> &nbsp;
                   </label>
-                  <div className="search-btn">
-                    <button onClick={confirmBooking} type="submit" disabled={!formValid}>
+                  <div className='search-btn'>
+                    <button
+                      onClick={confirmBooking}
+                      type='submit'
+                      disabled={!formValid}
+                    >
                       Send Request &nbsp; <FaArrowCircleRight />
                     </button>
                   </div>
