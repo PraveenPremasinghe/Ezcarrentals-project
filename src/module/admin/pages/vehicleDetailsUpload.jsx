@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
   Card,
+  Alert,
   Stack,
 } from "@mui/material";
 import { useDropzone } from "react-dropzone";
@@ -23,6 +24,7 @@ import {
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { CircularProgress } from '@mui/material';
 
 const VehicleForm = () => {
   const navigate = useNavigate();
@@ -37,6 +39,11 @@ const VehicleForm = () => {
   const [doors, setDoors] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [progress, setProgress] = useState(0);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('info');
+  const [loading, setLoading] = useState(false);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -66,6 +73,9 @@ const VehicleForm = () => {
       const StorageRef = storageRef(storage, `images/${uploadedImage.name}`);
       const uploadTask = uploadBytesResumable(StorageRef, uploadedImage);
 
+      // Set loading to true when upload starts
+    setLoading(true);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -76,6 +86,7 @@ const VehicleForm = () => {
         },
         (error) => {
           console.error(error.message);
+          setLoading(false);
         },
         async () => {
           const downloadURL = await getDownloadURL(StorageRef);
@@ -97,9 +108,22 @@ const VehicleForm = () => {
             setTitle("");
             setDoors("");
             setUploadedImage(null);
+            // Show success alert
+          setAlertMessage("Vehicle added successfully");
+          setAlertSeverity("success");
+          setShowAlert(true);
           } catch (error) {
+            
             console.error("Error adding document: ", error);
-          }
+          // Show error alert
+          setAlertMessage("Error adding document");
+          setAlertSeverity("error");
+          setShowAlert(true);
+          
+        } finally {
+          // Hide loading indicator when upload is completed
+          setLoading(false);
+        }
         }
       );
     }
@@ -122,6 +146,15 @@ const VehicleForm = () => {
               <Button variant="contained">Vehicle Details Table</Button>
             </Link>
           </Box>
+
+
+          <Stack spacing={2} style={{ position: 'fixed', top: 16, right: 16, zIndex: 9999 }}>
+  {showAlert && (
+    <Alert severity={alertSeverity} onClose={() => setShowAlert(false)}>
+      {alertMessage}
+    </Alert>
+  )}
+</Stack>
 
           <Typography variant="h5" align="center" gutterBottom>
             Vehicle Information Form
@@ -207,6 +240,18 @@ const VehicleForm = () => {
               Submit
             </Button>
           </Box>
+
+          {loading && (
+        <Box
+          position="fixed"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+          zIndex={9999}
+        >
+          <CircularProgress />
+        </Box>
+      )}
         </Card>
       </Container>
     </Box>

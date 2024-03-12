@@ -68,14 +68,13 @@ function Home() {
       <div onClick={handleWhatsAppCall}>
       <div className="wh-api">
 	<div className="wh-fixed whatsapp-pulse">
-		 
-			<button className="wh-ap-btn"></button>
-		 
+			<button className="wh-ap-btn"></button> 
 	</div>
 </div>
-      </div>
-      
+ </div>  
     </div>
+
+
 
     <div className="scroll-up-button">
       {isVisible && (
