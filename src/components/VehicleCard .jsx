@@ -32,7 +32,7 @@ const VehicleCard = ({
        <p className="card__title">{vehicleName}</p>
        <Typography className="per-day-price">
           {" "}
-          <span>$100{perDayPrice}</span> / day
+          <span>${perDayPrice}</span> / day
         </Typography>
        
        </div>
