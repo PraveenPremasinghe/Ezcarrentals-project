@@ -6,8 +6,11 @@ import VehicleCard from "./VehicleCard ";
 
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Hero() {
   const storage = getStorage();
@@ -25,7 +28,6 @@ function Hero() {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    
 
     responsive: [
       {
@@ -66,64 +68,55 @@ function Hero() {
     setVehicleDetailsData(vehiclesData);
   };
 
- 
- 
-  
-  
-
   return (
     <>
       {/* ******************* * imeplement new code here **************************** */}
       <section className='hero-section-bg-2'>
-  <div className='container'>
-    <div className='hero-text-2'>
-      <h1>
-        Plan Your Journey With Us Today
-      </h1>
-      <div>
-        <div className='category-main-2'>
-          <div className='category-2'>CARS</div>
-          <div className='category-2'>UTES</div>
-          <div className='category-2'>VANS</div>
+        <div className='container'>
+          <div className='hero-text-2'>
+            <h1>Plan Your Journey With Us Today</h1>
+            <div>
+              <div className='category-main-2'>
+                <div className='category-2'>CARS</div>
+                <div className='category-2'>UTES</div>
+                <div className='category-2'>VANS</div>
+              </div>
+            </div>
+          </div>
+
+          <div className='reserve-now-2'>
+            <button onClick={bookBtn} className='reserve-now-btn'>
+              <span> Request Quote </span>
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div className='reserve-now-2'>
-      <button onClick={bookBtn} className='reserve-now-btn'>
-        <span> Request Quote </span>
-      </button>
-    </div>
-  </div>
-
-  <div className='VehicleCard-slider-2'>
-    <Slider
-      sx={{
-        width: "100%",
-        m: 10,
-        display: "flex",
-        justifyContent: "center",
-      }}
-      {...settings}
-    
-    >
-      {vehicleDetailsData.map((vehicle, index) => (
-        <div key={index}>
-          <VehicleCard
-            imageUrl={vehicle.imageUrl}
-            vehicleName={vehicle.vehicleName}
-            category={vehicle.category}
-            doors={vehicle.doors}
-            seats={vehicle.seats}
-            transmission={vehicle.transmission}
-            perDayPrice={vehicle.perDayPrice}
-          />
+        <div className='VehicleCard-slider-2'>
+          <Slider
+            sx={{
+              width: "100%",
+              m: 10,
+              display: "flex",
+              justifyContent: "center",
+            }}
+            {...settings}
+          >
+            {vehicleDetailsData.map((vehicle, index) => (
+              <div key={index}>
+                <VehicleCard
+                  imageUrl={vehicle.imageUrl}
+                  vehicleName={vehicle.vehicleName}
+                  category={vehicle.category}
+                  doors={vehicle.doors}
+                  seats={vehicle.seats}
+                  transmission={vehicle.transmission}
+                  perDayPrice={vehicle.perDayPrice}
+                />
+              </div>
+            ))}
+          </Slider>
         </div>
-      ))}
-    </Slider>
-  </div>
-</section>
-
+      </section>
 
       {/* ******************* * imeplement new code here **************************** */}
     </>

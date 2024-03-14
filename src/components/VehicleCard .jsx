@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 
- 
-import { PiGearFineBold ,PiCurrencyDollarBold  } from "react-icons/pi";
+import { PiGearFineBold, PiCurrencyDollarBold } from "react-icons/pi";
 import { GiCarDoor } from "react-icons/gi";
 import { FaPeopleGroup } from "react-icons/fa6";
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-
-
- 
-
- 
-
-
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const VehicleCard = ({
   imageUrl,
@@ -24,23 +16,19 @@ const VehicleCard = ({
   seats,
 }) => {
   return (
-      <>
-      <div className="vehicleCard">
-       <img className="vehicleCard-img" src={imageUrl} alt="" />
+    <>
+      <div className='vehicleCard'>
+        <img className='vehicleCard-img' src={imageUrl} alt='' />
 
-       <div className="vehicleCard-price">
-       <p className="card__title">{vehicleName}</p>
-       <Typography className="per-day-price">
-          {" "}
-          <span>${perDayPrice}</span> / day
-        </Typography>
-       
-       </div>
-       
-       
-       
+        <div className='vehicleCard-price'>
+          <p className='card__title'>{vehicleName}</p>
+          <Typography className='per-day-price'>
+            {" "}
+            <span>${perDayPrice}</span> / day
+          </Typography>
+        </div>
 
-  {/* <div className="card__content">
+        {/* <div className="card__content">
     <p className="card__title">{vehicleName}</p>
     <div className="card__description">
     <table className="card-table" >
@@ -59,8 +47,7 @@ const VehicleCard = ({
         </Typography>
    </div>
   </div> */}
-
-</div>
+      </div>
     </>
   );
 };

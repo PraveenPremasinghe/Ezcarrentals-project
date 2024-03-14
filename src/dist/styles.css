@@ -6,21 +6,21 @@
 
 html {
   scroll-behavior: smooth;
-  -ms-content-zooming:none;  
-  overflow-x: hidden; 
-  overflow-x: none; 
+  -ms-content-zooming: none;
+  overflow-x: hidden;
+  overflow-x: none;
 }
 
 body {
   background-color: #ffffff;
   font-family: "Poppins", sans-serif;
   position: relative;
-  -ms-content-zooming:none;  
-  overflow-x: hidden; 
-  overflow-x: none; 
+  -ms-content-zooming: none;
+  overflow-x: hidden;
+  overflow-x: none;
 }
 
- 
+
 
 .container {
   max-width: 133rem !important;
@@ -37,7 +37,7 @@ body {
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {
   width: 5px;
- 
+
 }
 
 *::-webkit-scrollbar-track {
@@ -588,7 +588,7 @@ body {
   align-content: center;
   align-items: center;
   justify-content: center;
- 
+
 }
 
 .book-content__box button {
@@ -838,7 +838,7 @@ body {
   color: #010103;
 }
 
-.booking-modal__car-info__model  {
+.booking-modal__car-info__model {
   width: 500px;
   height: 400px;
 }
@@ -945,9 +945,10 @@ body {
 }
 
 
-.reserve-button  {
-text-align: center;
+.reserve-button {
+  text-align: center;
 }
+
 .reserve-button button {
   color: white;
   font-weight: 700;
@@ -1684,7 +1685,7 @@ text-align: center;
 }
 
 .download-section {
- 
+
   background-color: #f8f8f8;
   background-position: top center;
   background-repeat: no-repeat;
@@ -1770,7 +1771,7 @@ footer {
   padding: 20px;
 }
 
-.footer-bottom a{
+.footer-bottom a {
   color: #fff;
 }
 
@@ -2403,7 +2404,7 @@ footer {
 .contact-div__text h2 {
   font-size: 3rem;
   line-height: 1.3;
- 
+
 }
 
 .contact-div__text p {
@@ -2567,7 +2568,7 @@ footer {
 
 .overlay {
   position: absolute;
-  bottom:0;
+  bottom: 0;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
@@ -2575,5 +2576,5 @@ footer {
   z-index: 999;
   width: 221px;
   height: 61px;
-  pointer-events: none!important;
+  pointer-events: none !important;
 }
