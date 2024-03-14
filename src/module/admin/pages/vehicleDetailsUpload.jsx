@@ -110,9 +110,9 @@ const VehicleForm = () => {
             setAlertSeverity("success");
             setShowAlert(true);
           } catch (error) {
-            console.error("Error adding document: ", error);
+            console.error("Error adding Vehicle Details: ", error);
             // Show error alert
-            setAlertMessage("Error adding document");
+            setAlertMessage("Error adding Vehicle Details");
             setAlertSeverity("error");
             setShowAlert(true);
           } finally {
