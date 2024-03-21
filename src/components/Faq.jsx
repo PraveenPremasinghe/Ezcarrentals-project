@@ -76,10 +76,7 @@ function Faq() {
                   onClick={() => openQ("q2")}
                   className={`faq-box__answer ${getClassAnswer("q2")}`}
                 >
-                  We charge this as a non-refundable payment which gets credited
-                  on to your final bill on pick up. This is charged as once a
-                  booking is confirmed we hold the car for you and may cancel
-                  other bookings to hold the car for you.
+                 This is charged as we lock the car in and hold it for you.
                 </div>
               </div>
 

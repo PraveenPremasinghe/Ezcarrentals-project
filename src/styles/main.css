@@ -262,11 +262,14 @@ body {
 
 }
 
-.per-day-price span {
-  font-size: 20px;
+
+
+.per-day-price span:nth-child(2) {
+  font-size: 25px;
   font-weight: 600;
   color: #FDC323 ;
 }
+
 
 .hidden-car {
   transform: scale(0.7);
@@ -755,6 +758,15 @@ button.wh-ap-btn::before {
 }
 
 
+.banner-content-second-text{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
 
 @media only screen and (max-width: 768px) {
   .book-car-title span {
@@ -962,6 +974,8 @@ button.wh-ap-btn::before {
   font-size: 1rem;
 } 
 
+
+
 .reserve-now-btn {
   display: inline-block;
   border-radius: 15px;
@@ -977,6 +991,15 @@ button.wh-ap-btn::before {
   padding: px 10px;
   transition: all 0.4s;
   cursor: pointer;
+}
+
+.banner-content-second-text p:not(:last-child)::after {
+  display: none;
+}
+
+.banner-content-second-text{
+ 
+  gap: 10px!important;
 }
 
 }

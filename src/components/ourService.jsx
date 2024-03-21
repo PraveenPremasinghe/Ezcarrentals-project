@@ -17,9 +17,9 @@ const slidesContent = [
       "We offer roadside assistance within Melbourne region. Call us if you need any help and we will take it from there.",
   },
   {
-    title: "Car drop off and Pick up",
+    title: "Car Drop off and Pick up",
     description:
-      "We offer car drop off and pick up service depending on our availability.We could happily drown you off to the airport for the price of an Uber (if available).",
+      "We offer car drop off and pick up service depending on our availability. We could happily drop you off to the airport for the price of an Uber (if available).",
   },
   {
     title: "We are a local business",

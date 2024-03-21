@@ -30,8 +30,9 @@ function Footer() {
               </li>
 
               <li>
-                We offers a big range of vehicles for all your driving needs. We
-                have the perfect car to meet your needs.
+              We offer a wide range of
+vehicles for all your driving
+needs.
               </li>
               <li>
                 <a href={`tel:${phoneNumber}`}>
