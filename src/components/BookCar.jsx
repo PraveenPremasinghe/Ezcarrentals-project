@@ -159,7 +159,7 @@ function BookCar() {
               )}
 
               <p className='booking-done'>
-                Thank You for Requesting us!
+              Thank you for enquiring. Our friendly staff will get back to you shortly !
                 <i onClick={hideMessage} className='fa-solid fa-xmark'></i>
               </p>
 
