@@ -12,7 +12,17 @@ function Banner() {
           <div className='banner-content'>
             <div className='banner-content__text'>
               <h2>SAVE BIG WITH OUR INDSUTRY BEATING PRICES!</h2>
-              <p>Roadside Assistance | Dedicated Support | Easy to Rent</p>
+              <div className="banner-content-second-text">
+              {/* <p>Roadside Assistance&nbsp;&nbsp;|</p>
+              <p>Dedicated Support&nbsp;&nbsp;|</p>
+              <p>Easy to Rent</p> */}
+
+              <p>Roadside Assistance</p>
+              <p>Dedicated Support</p>
+              <p>Easy to Rent</p>
+
+              </div>
+             
 
               <div className='call-now-btn-container'>
                 <div
