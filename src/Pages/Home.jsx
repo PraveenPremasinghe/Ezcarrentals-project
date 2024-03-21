@@ -17,7 +17,7 @@ function YourComponent() {
   const [loading, setLoading] = useState(true);
 
   const handleWhatsAppCall = () => {
-    const phoneNumber = "0400920512";
+    const phoneNumber = +610400920512;
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
   };
