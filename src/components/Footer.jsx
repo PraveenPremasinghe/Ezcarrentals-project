@@ -5,7 +5,6 @@ import Logo from "../images/logo/Ezcarrentals-logo.png";
 function Footer() {
   const emailAddress = "ezcarrentalsmelbourne@gmail.com";
   const phoneNumber = "0400 920 512";
-
   return (
     <>
       <footer className='footer'>
@@ -28,11 +27,8 @@ function Footer() {
                   </Link>
                 </div>
               </li>
-
               <li>
-              We offer a wide range of
-vehicles for all your driving
-needs.
+                We offer a wide range of vehicles for all your driving needs.
               </li>
               <li>
                 <a href={`tel:${phoneNumber}`}>
@@ -40,7 +36,6 @@ needs.
                   &nbsp;{phoneNumber}
                 </a>
               </li>
-
               <li>
                 <a href={`mailto:${emailAddress}`}>
                   <FaEnvelopeOpenText /> &nbsp;
@@ -48,7 +43,6 @@ needs.
                 </a>
               </li>
             </ul>
-
             <ul className='footer-content__2'>
               <li>Working Hours</li>
               <li>
@@ -58,7 +52,6 @@ needs.
               <li>Sat: 8:00AM - 8:00PM</li>
               <li>Sun: 8:00AM - 8:00PM</li>
             </ul>
-
             <ul className='footer-content__2'>
               <li>Subscription</li>
               <li>
@@ -74,7 +67,6 @@ needs.
           </div>
         </div>
       </footer>
-
       <div className='footer-bottom'>
         Designed and Developed by{" "}
         <a href='https://praveenpremasinghe-me.netlify.app/'>

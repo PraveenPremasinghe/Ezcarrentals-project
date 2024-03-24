@@ -4,29 +4,24 @@ import Logo from "../images/logo/Ezcarrentals-logo.png";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
-
   const openNav = () => {
     setNav(!nav);
   };
-
   const handleServiceClick = () => {
     document
       .querySelector(".pick-container")
       .scrollIntoView({ behavior: "smooth" });
   };
-
   const handelTestimonialsClick = () => {
     document
       .querySelector(".testimonials-section")
       .scrollIntoView({ behavior: "smooth" });
   };
-
   const handelContactusClick = () => {
     document
       .querySelector(".contact-page")
       .scrollIntoView({ behavior: "smooth" });
   };
-
   return (
     <>
       <nav>
@@ -41,7 +36,6 @@ function Navbar() {
                 Home
               </Link>
             </li>
-
             <li>
               <Link onClick={openNav} to='/models'>
                 Models
@@ -54,9 +48,7 @@ function Navbar() {
             </li>
           </ul>
         </div>
-
         {/* desktop */}
-
         <div className='navbar'>
           <div className='navbar__img'>
             <Link to='/' onClick={() => window.scrollTo(0, 0)}>
@@ -73,7 +65,6 @@ function Navbar() {
                 Home
               </Link>
             </li>
-
             <li>
               <Link className='about-link' to='#' onClick={handleServiceClick}>
                 Our Service
@@ -89,7 +80,6 @@ function Navbar() {
                 Testimonials
               </Link>
             </li>
-
             <li>
               {" "}
               <Link
@@ -101,7 +91,6 @@ function Navbar() {
               </Link>
             </li>
           </ul>
-
           {/* mobile */}
           <div className='mobile-hamb' onClick={openNav}>
             <i className='fa-solid fa-bars'></i>
