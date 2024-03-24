@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { PiGearFineBold, PiCurrencyDollarBold } from "react-icons/pi";
-import { GiCarDoor } from "react-icons/gi";
-import { FaPeopleGroup } from "react-icons/fa6";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 const VehicleCard = ({
   imageUrl,
@@ -19,14 +15,12 @@ const VehicleCard = ({
     <>
       <div className='vehicleCard'>
         <img className='vehicleCard-img' src={imageUrl} alt='' />
-
         <div className='vehicleCard-price'>
           <p className='card__title'>{vehicleName}</p>
           <Typography className='per-day-price'>
            <span>FROM</span> <span>${perDayPrice}</span> / WEEK
           </Typography>
         </div>
-
         {/* <div className="card__content">
     <p className="card__title">{vehicleName}</p>
     <div className="card__description">

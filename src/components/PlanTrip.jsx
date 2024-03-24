@@ -14,7 +14,6 @@ function PlanTrip() {
                 QUICK & <span class='red-text'>EZ</span> TO RENT
               </h2>
             </div>
-
             <div className='plan-container__boxes'>
               <div className='plan-container__boxes__box'>
                 <img src={SelectCar} alt='icon_img' />
@@ -25,7 +24,6 @@ function PlanTrip() {
                   one stop local shop for all your rental needs.
                 </p>
               </div>
-
               <div className='plan-container__boxes__box'>
                 <img src={Contact} alt='icon_img' />
                 <h3>Call us or send us your enquiry</h3>
@@ -35,7 +33,6 @@ function PlanTrip() {
                   come down to collect the car.
                 </p>
               </div>
-
               <div className='plan-container__boxes__box'>
                 <img src={Drive} alt='icon_img' />
                 <h3>Let's Drive</h3>

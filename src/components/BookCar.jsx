@@ -3,72 +3,55 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import TextField from "@mui/material/TextField";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 import Select from "react-select";
 
 function BookCar() {
-  const storage = getStorage();
+ 
   const firestore = getFirestore();
-
-  const [modal, setModal] = useState(false); //  class - active-modal
-
+ 
   // booking car
   const [carType, setCarType] = useState("");
   const [carName, setCarName] = useState("");
-
   const [carImg, setCarImg] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-
   // modal infos
   const [name, setName] = useState("");
-
   const [phone, setPhone] = useState("");
-
   const [email, setEmail] = useState("");
-
   //vehicleDetails
   const [vehicleDetailsData, setVehicleDetailsData] = useState([]);
   const [formValid, setFormValid] = useState(false);
-
   useEffect(() => {
     setFormValid(validateForm());
   }, [carType, name, phone, email, message]);
-
   // taking value of modal inputs
   const handleName = (e) => {
     setName(e.target.value);
   };
-
   const handlePhone = (e) => {
     setPhone(e.target.value);
   };
-
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
-
   useEffect(() => {
     fetchVehicleDetails();
   }, []);
-
   // confirm modal booking
   const confirmBooking = (e) => {
     e.preventDefault();
-
     // Check if any field is empty
     if (!carType || !name || !phone || !email || !message) {
       setError(true); // Set error state to true
       return; // Exit the function early
     }
-
     const payload = {
       carType: carType.label,
       name: name,
@@ -76,7 +59,6 @@ function BookCar() {
       email: email,
       message: message,
     };
-
     emailjs
       .send(
         process.env.REACT_APP_EMAIL_SERVICE_ID,
@@ -92,7 +74,6 @@ function BookCar() {
         (error) => {}
       );
   };
-
   // taking value of booking inputs
   const handleCar = (e) => {
     setCarType(e);
@@ -100,7 +81,6 @@ function BookCar() {
     setCarImg(selectedDate.imageUrl);
     setCarName(selectedDate.vehicleName);
   };
-
   const fetchVehicleDetails = async () => {
     const vehiclesCollection = collection(firestore, "vehicles");
     const vehiclesSnapshot = await getDocs(vehiclesCollection);
@@ -110,33 +90,27 @@ function BookCar() {
     }));
     setVehicleDetailsData(vehiclesData);
   };
-
   // hide message
   const hideMessage = () => {
     const doneMsg = document.querySelector(".booking-done");
     doneMsg.style.display = "none";
   };
-
   const CarList = vehicleDetailsData.map((data) => ({
     value: data.id,
     label: data.vehicleName,
   }));
-
   const validateForm = () => {
     return carType && name && phone && email && message;
   };
-
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
-
   const validatePhoneNumber = (phoneNumber) => {
     // Use a regular expression to check if the phone number is in a valid format
     const regex = /^\d{10}$/; // Assuming a 10-digit phone number format
     return regex.test(phoneNumber);
   };
-
   return (
     <>
       <section id='booking-section' className='book-section'>
@@ -147,7 +121,6 @@ function BookCar() {
                 {" "}
                 <span>Request a Quote</span>{" "}
               </h2>
-
               {error && ( // Show error message if there's an error
                 <p className='error-message'>
                   <Alert severity='error'>
@@ -157,18 +130,16 @@ function BookCar() {
                   </Alert>
                 </p>
               )}
-
               <p className='booking-done'>
-              Thank you for enquiring. Our friendly staff will get back to you shortly !
+                Thank you for enquiring. Our friendly staff will get back to you
+                shortly !
                 <i onClick={hideMessage} className='fa-solid fa-xmark'></i>
               </p>
-
               <form className='box-form'>
                 <div className='box-form__car-type'>
                   <label>
                     <i className='fa-solid fa-car'></i> &nbsp; Select Your Car
                   </label>
-
                   <Select
                     value={carType}
                     onChange={handleCar}
@@ -177,7 +148,6 @@ function BookCar() {
                     isSearchable={false}
                   />
                 </div>
-
                 <div className='box-form__car-time'>
                   <label>
                     <i className='fa-regular fa-calendar-days '></i> &nbsp;Full
@@ -194,7 +164,6 @@ function BookCar() {
                     sx={{ m: 0, cursor: "auto" }}
                   />
                 </div>
-
                 <div className='box-form__car-time'>
                   <label>
                     <i className='fa-regular fa-calendar-days '></i> &nbsp;Phone
@@ -217,7 +186,6 @@ function BookCar() {
                     sx={{ m: 0 }}
                   />
                 </div>
-
                 <div className='box-form__car-time'>
                   <label>
                     <i className='fa-regular fa-calendar-days '></i> &nbsp;Email
@@ -240,7 +208,6 @@ function BookCar() {
                     sx={{ m: 0 }}
                   />
                 </div>
-
                 <div className='box-form__car-time'>
                   <label>
                     <i className='fa-regular fa-calendar-days '></i>{" "}
@@ -258,7 +225,6 @@ function BookCar() {
                     sx={{ m: 0, backgroundColor: "#fff", borderRadius: "5px" }}
                   />
                 </div>
-
                 <div className='box-form__car-time'>
                   <label htmlFor='droptime'>
                     <i className='fa-regular fa-calendar-days '></i> &nbsp;

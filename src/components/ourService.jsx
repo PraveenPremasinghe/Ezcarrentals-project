@@ -69,7 +69,6 @@ function OurService() {
       },
     ],
   };
-
   return (
     <>
       <section className='pick-section'>
@@ -81,13 +80,7 @@ function OurService() {
                 We pride ourselves in offering an unmatched service with crazy
                 low pricing
               </h3>
-
-              {/* <p>
-                Choose from a variety of our amazing vehicles to rent for your
-                next adventure or business trip
-              </p> */}
             </div>
-
             <Slider {...settings}>
               {images.map((image, index) => (
                 <div key={index} className='our-service-slider'>

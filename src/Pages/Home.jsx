@@ -15,20 +15,17 @@ import  LoadingProgress  from '../components/loadingProgress';
 function YourComponent() {
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const handleWhatsAppCall = () => {
     const phoneNumber = +610400920512;
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
   };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
-
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -37,20 +34,16 @@ function YourComponent() {
         setIsVisible(false);
       }
     };
-
     window.addEventListener("scroll", toggleVisibility);
-
     // Simulate loading time with setTimeout
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000); // Adjust the time as needed
-
     return () => {
       window.removeEventListener("scroll", toggleVisibility);
       clearTimeout(timer);
     };
   }, []);
-
   return (
     <>
       {loading ? (
@@ -68,7 +61,6 @@ function YourComponent() {
           <Testimonials />
           <Faq />
           <Footer />
-
           <div className='wh-api-bg'>
             <div onClick={handleWhatsAppCall}>
               <div className='wh-api'>
@@ -78,7 +70,6 @@ function YourComponent() {
               </div>
             </div>
           </div>
-
           <div className='scroll-up-button'>
             {isVisible && (
               <button onClick={scrollToTop}>
